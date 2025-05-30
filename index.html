@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Jet Predictor - Предсказатель коэффициентов</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/chart-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta name="description" content="Получите точные предсказания коэффициентов для игры Lucky Jet и увеличьте свои шансы на выигрыш.">
+    <meta name="theme-color" content="#121212">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="img/downloaded/logo.png" alt="Lucky Jet Predictor" id="logo-img">
+                <h1>Lucky Jet <span>Predictor</span></h1>
+            </div>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#hero" class="nav-link active" data-target="hero">Главная</a></li>
+                    <li><a href="#stats-section" class="nav-link" data-target="stats-section">Статистика</a></li>
+                    <li><a href="#" class="nav-link">О проекте</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero monochrome-card" id="hero">
+                <div class="hero-content">
+                    <h2 class="monochrome-text-glow">Предикты коэффициентов для игры Lucky Jet</h2>
+                    <p>Получите точные предсказания коэффициентов и увеличьте свои шансы на выигрыш</p>
+                    <div class="hero-buttons">
+                        <button id="start-btn" class="btn primary-btn monochrome-gradient monochrome-glow">Начать сейчас</button>
+                        <button id="casino-btn" class="btn accent-btn monochrome-gradient">Играть в казино</button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="img/downloaded/lucky-jet.png" alt="Lucky Jet Game" class="hero-game-image monochrome-pulse">
+                </div>
+            </section>
+
+            <section class="predictor monochrome-card">
+                <div class="predictor-header monochrome-gradient">
+                    <h3 class="monochrome-text-glow">Предсказатель коэффициентов</h3>
+                    <div class="status monochrome-border">
+                        <span class="status-dot online monochrome-pulse"></span>
+                        <span class="status-text">Онлайн</span>
+                    </div>
+                </div>
+                
+                <div class="predictor-content">
+                    <div class="predictor-controls">
+                        <button id="generate-btn" class="btn secondary-btn monochrome-gradient">Сгенерировать предикт</button>
+                        <div class="timer monochrome-border monochrome-glow">
+                            <span id="timer-value" class="monochrome-text-glow">00:30</span>
+                            <span class="timer-label">до следующего раунда</span>
+                        </div>
+                    </div>
+                    
+                    <div class="prediction-result monochrome-card">
+                        <div class="coefficient">
+                            <div id="coefficient-value" class="monochrome-text-glow">2.35x</div>
+                            <div class="coefficient-label">Предсказанный коэффициент</div>
+                        </div>
+                        <div class="accuracy">
+                            <div class="accuracy-bar">
+                                <div class="accuracy-fill" style="width: 85%;"></div>
+                            </div>
+                            <span class="accuracy-value">85% точность</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="history">
+                <h3 class="monochrome-text-glow heading-reveal">История предиктов</h3>
+                <div class="history-table monochrome-card">
+                    <div class="history-header monochrome-gradient">
+                        <div class="history-cell">Время</div>
+                        <div class="history-cell">Предикт</div>
+                        <div class="history-cell">Фактический</div>
+                        <div class="history-cell">Статус</div>
+                    </div>
+                    <div class="history-body" id="history-body">
+                        <!-- История будет заполняться динамически -->
+                    </div>
+                </div>
+                
+                <!-- Добавленный график истории предиктов -->
+                <div class="chart-section monochrome-card">
+                    <h4 class="monochrome-text-glow heading-reveal">График коэффициентов</h4>
+                    <div class="chart-container-wrapper">
+                        <canvas id="chart-container" height="250"></canvas>
+                    </div>
+                    <div id="trend-indicator" class="trend-indicator trend-neutral">
+                        <span class="trend-icon">→</span>
+                        <span class="trend-text">Нейтральный тренд</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Секция статистики была удалена -->
+            
+            <section class="features">
+                <!-- Здесь может быть секция с функциями -->
+            </section>
+
+            <section class="recommendations monochrome-card">
+                <h4 class="monochrome-text-glow">Рекомендации по игре</h4>
+                <div class="recommendation monochrome-border">
+                    <div class="recommendation-icon monochrome-glow">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="recommendation-text">
+                        <h5 class="monochrome-text-glow">Лучшее время для игры</h5>
+                        <p>Сейчас самое удачное время для игры – высокая вероятность больших коэффициентов!</p>
+                    </div>
+                </div>
+                <div class="recommendation">
+                    <div class="recommendation-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="recommendation-text">
+                        <h5>Оптимальная стратегия</h5>
+                        <p>Рекомендуем фиксировать выигрыш на коэффициентах 2.0-3.5x для максимальной прибыли.</p>
+                    </div>
+                </div>
+                <div class="recommendation">
+                    <div class="recommendation-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="recommendation-text">
+                        <h5>Безопасная игра</h5>
+                        <p>Установите лимит на проигрыш и не превышайте его, чтобы избежать финансовых потерь.</p>
+                    </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Lucky Jet <span>Predictor</span></h3>
+                    <p>© 2025 Lucky Jet Predictor. Все права защищены.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Ссылки</h4>
+                    <ul>
+                        <li><a href="#">Главная</a></li>
+                        <li><a href="#">Статистика</a></li>
+                        <li><a href="#">О проекте</a></li>
+                        <li><a href="#">Политика конфиденциальности</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@luckyjetpredictor.com</li>
+                        <li><i class="fas fa-comment"></i> Telegram: @luckyjetpredictor</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="disclaimer">
+                <p>Предупреждение: Данный сайт предоставляет информацию исключительно в ознакомительных целях. Мы не гарантируем выигрыш и не несем ответственности за возможные финансовые потери.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Баннер с промокодом -->
+    <div id="promo-banner" class="promo-banner">
+        <div class="promo-content">
+            <div class="promo-header">
+                <h3>Важно! Используйте промокод</h3>
+                <button id="close-promo" class="close-promo">&times;</button>
+            </div>
+            <div class="promo-body">
+                <p>Для получения максимальных бонусов при регистрации в казино обязательно укажите промокод:</p>
+                <div class="promo-code">
+                    <span id="promo-text">ACGG</span>
+                    <button id="copy-promo" class="copy-btn">Копировать</button>
+                </div>
+                <p class="promo-note">Этот промокод дает вам дополнительные бонусы и фриспины при регистрации!</p>
+            </div>
+            <div class="promo-footer">
+                <button id="continue-to-casino" class="btn accent-btn">Продолжить в казино</button>
+            </div>
+        </div>
+    </div>
+    <div id="promo-overlay" class="promo-overlay"></div>
+
+    <script src="js/script.js"></script>
+    <script src="js/chart.js"></script>
+</body>
+</html>
