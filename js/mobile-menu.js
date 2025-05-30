@@ -3,25 +3,48 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     const nav = document.querySelector('nav');
     const body = document.body;
+    const overlay = document.createElement('div');
+    
+    // Создаем оверлей для мобильного меню
+    overlay.className = 'mobile-menu-overlay';
+    document.body.appendChild(overlay);
     
     // Функция для переключения мобильного меню
     function toggleMobileMenu() {
         nav.classList.toggle('active');
         mobileMenuToggle.classList.toggle('active');
         body.classList.toggle('menu-open');
+        overlay.classList.toggle('active');
+        
+        // Блокировка прокрутки страницы при открытом меню
+        if (body.classList.contains('menu-open')) {
+            body.style.overflow = 'hidden';
+        } else {
+            body.style.overflow = '';
+        }
     }
     
     // Обработчик клика по кнопке меню
-    mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+    mobileMenuToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleMobileMenu();
+    });
     
     // Обработчик клика по ссылкам меню для закрытия меню при переходе
     const navLinks = document.querySelectorAll('nav a');
     navLinks.forEach(link => {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', function(e) {
             if (nav.classList.contains('active')) {
                 toggleMobileMenu();
             }
         });
+    });
+    
+    // Закрытие меню при клике по оверлею
+    overlay.addEventListener('click', function() {
+        if (nav.classList.contains('active')) {
+            toggleMobileMenu();
+        }
     });
     
     // Закрытие меню при клике вне меню
