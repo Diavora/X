@@ -9,8 +9,16 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Lucky Jet Predictor - Предсказатель коэффициентов</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/chart-styles.css">
     <link rel="stylesheet" href="css/mobile.css">
+    <link rel="stylesheet" href="css/loading-animation.css">
+    <link rel="stylesheet" href="css/coefficient-animation.css">
+    <link rel="stylesheet" href="css/chart-styles.css">
+    <link rel="stylesheet" href="css/timer-notification.css">
+    <link rel="stylesheet" href="css/responsive-fixes.css">
+    <link rel="stylesheet" href="css/predictor-mobile.css">
+    <link rel="stylesheet" href="css/history-mobile.css">
+    <link rel="stylesheet" href="css/effects.css">
+    <!-- CSS для 3D-анимации удален -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -80,16 +88,48 @@
                         </div>
                     </div>
                     
-                    <div class="prediction-result monochrome-card">
-                        <div class="coefficient">
-                            <div id="coefficient-value" class="monochrome-text-glow">2.35x</div>
-                            <div class="coefficient-label">Предсказанный коэффициент</div>
-                        </div>
-                        <div class="accuracy">
-                            <div class="accuracy-bar">
-                                <div class="accuracy-fill" style="width: 85%;"></div>
+                    <div id="prediction-container">
+                        <!-- Контейнер для анимации загрузки (изначально скрыт) -->
+                        <div id="loading-prediction" class="loading-container" style="display: none;">
+                            <div class="loading-spinner"></div>
+                            <div id="loading-text" class="loading-text">Анализ данных...</div>
+                            
+                            <div class="loading-progress">
+                                <div id="loading-progress-bar" class="loading-progress-bar" style="width: 0%"></div>
                             </div>
-                            <span class="accuracy-value">85% точность</span>
+                            
+                            <div class="loading-steps">
+                                <div class="loading-step">
+                                    <div id="step-1" class="loading-step-dot active"></div>
+                                    <div class="loading-step-label active">Сбор данных</div>
+                                </div>
+                                <div class="loading-step">
+                                    <div class="loading-step-line" id="line-1"></div>
+                                    <div id="step-2" class="loading-step-dot"></div>
+                                    <div class="loading-step-label">Анализ</div>
+                                </div>
+                                <div class="loading-step">
+                                    <div class="loading-step-line" id="line-2"></div>
+                                    <div id="step-3" class="loading-step-dot"></div>
+                                    <div class="loading-step-label">Предсказание</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Результат предсказания (изначально виден) -->
+                        <div id="prediction-result" class="prediction-result monochrome-card">
+                            <div class="coefficient-container">
+                                <div class="coefficient-label">Коэффициент:</div>
+                                <div id="coefficient-value" class="coefficient">0.00x</div>
+                            </div>
+                            
+                            <!-- 3D визуализация полета удалена -->
+                            <div class="accuracy">
+                                <div class="accuracy-bar">
+                                    <div class="accuracy-fill" style="width: 85%;"></div>
+                                </div>
+                                <span class="accuracy-value">85% точность</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -210,7 +250,15 @@
     </div>
     <div id="promo-overlay" class="promo-overlay"></div>
 
-    <script src="js/script.js"></script>
+    <!-- 3D-библиотеки удалены -->
+    <!-- Используем оптимизированную версию скрипта для повышения производительности и стабильности -->
+    <!-- <script src="js/debug.js"></script> -->
+    <!-- <script src="js/script.js"></script> -->
+    <!-- <script src="js/script-fixed.js"></script> -->
+    <script src="js/script-optimized.js"></script>
     <script src="js/chart.js"></script>
+    <script src="js/mobile-menu.js"></script>
+    <script src="js/effects.js"></script>
+    <!-- Скрипт 3D-анимации удален -->
 </body>
 </html>

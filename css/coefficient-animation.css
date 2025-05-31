@@ -1,0 +1,91 @@
+/**
+ * Стили для анимации коэффициента
+ */
+
+/* Анимация пульсации при появлении коэффициента */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Применение анимации пульсации */
+.pulse-animation {
+    animation: pulse 0.5s ease-in-out;
+    animation-iteration-count: 2;
+}
+
+/* Цветовое оформление коэффициентов */
+.coefficient {
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+/* Низкий коэффициент (менее 1.6) */
+.low-coefficient {
+    color: #ff5252;
+    text-shadow: 0 0 10px rgba(255, 82, 82, 0.5);
+}
+
+/* Средний коэффициент (от 1.6 до 5.0) */
+.medium-coefficient {
+    color: #ffca28;
+    text-shadow: 0 0 10px rgba(255, 202, 40, 0.5);
+}
+
+/* Высокий коэффициент (более 5.0) */
+.high-coefficient {
+    color: #4caf50;
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+/* Увеличиваем размер коэффициента для лучшей видимости */
+#coefficient-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+/* Стили для контейнера коэффициента */
+.coefficient-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(30, 30, 30, 0.8), rgba(20, 20, 20, 0.8));
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+/* Эффект при наведении на контейнер коэффициента */
+.coefficient-container:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Стили для метки коэффициента */
+.coefficient-label {
+    font-size: 1rem;
+    color: #aaa;
+    margin-bottom: 5px;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    #coefficient-value {
+        font-size: 2rem;
+    }
+    
+    .coefficient-container {
+        padding: 10px;
+    }
+}

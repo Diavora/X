@@ -1,0 +1,278 @@
+/**
+ * Дополнительные стили для улучшения адаптивности на мобильных устройствах
+ * Эти стили дополняют существующие в mobile.css
+ */
+
+/* Глобальные улучшения для мобильных устройств */
+@media screen and (max-width: 768px) {
+    /* Улучшаем читаемость текста */
+    body {
+        font-size: 16px;
+        line-height: 1.5;
+        -webkit-text-size-adjust: 100%;
+    }
+    
+    /* Улучшаем отступы контейнера */
+    .container {
+        padding: 0 10px;
+        overflow-x: hidden;
+    }
+    
+    /* Улучшаем внешний вид кнопок */
+    .btn {
+        width: 100%;
+        padding: 14px 20px;
+        margin: 8px 0;
+        font-size: 16px;
+    }
+    
+    /* Улучшаем внешний вид заголовков */
+    h1 {
+        font-size: 24px;
+        line-height: 1.3;
+    }
+    
+    h2 {
+        font-size: 22px;
+        line-height: 1.3;
+    }
+    
+    h3 {
+        font-size: 20px;
+        line-height: 1.3;
+    }
+    
+    /* Исправляем отступы секций */
+    section {
+        margin: 15px 0;
+        padding: 15px 0;
+    }
+    
+    /* Улучшаем отображение логотипа */
+    .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .logo img {
+        max-width: 40px;
+        height: auto;
+    }
+    
+    .logo h1 {
+        font-size: 20px;
+        margin-left: 8px;
+    }
+    
+    /* Улучшаем отображение предиктора */
+    .predictor {
+        margin: 15px 0;
+        border-radius: 12px;
+    }
+    
+    .predictor-content {
+        padding: 15px;
+    }
+    
+    /* Улучшаем отображение коэффициента */
+    #coefficient-value {
+        font-size: 3rem !important;
+    }
+    
+    /* Улучшаем отображение анимации загрузки */
+    .loading-container {
+        min-height: 120px;
+        padding: 15px;
+    }
+    
+    .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border-width: 3px;
+    }
+}
+
+/* Дополнительные улучшения для маленьких экранов */
+@media screen and (max-width: 576px) {
+    /* Улучшаем отображение истории предиктов */
+    .history-table {
+        font-size: 14px;
+        border-radius: 8px;
+    }
+    
+    .history-cell {
+        padding: 8px 5px;
+    }
+    
+    /* Улучшаем отображение футера */
+    footer {
+        padding: 15px 0;
+        text-align: center;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+    }
+    
+    .footer-links {
+        margin-top: 15px;
+    }
+    
+    /* Улучшаем отображение промо-баннера */
+    .promo-banner {
+        padding: 10px;
+    }
+    
+    .promo-content {
+        flex-direction: column;
+    }
+    
+    #promo-text {
+        font-size: 1.2rem;
+        padding: 10px;
+        text-align: center;
+    }
+    
+    .promo-btn {
+        margin-top: 10px;
+        width: 100%;
+    }
+    
+    /* Улучшаем отображение анимации коэффициента */
+    .coefficient-container {
+        padding: 10px;
+    }
+    
+    /* Фиксируем проблему с горизонтальной прокруткой */
+    html, body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+}
+
+/* Улучшения для очень маленьких экранов */
+@media screen and (max-width: 375px) {
+    body {
+        font-size: 14px;
+    }
+    
+    .container {
+        padding: 0 8px;
+    }
+    
+    h1 {
+        font-size: 20px;
+    }
+    
+    h2 {
+        font-size: 18px;
+    }
+    
+    h3 {
+        font-size: 16px;
+    }
+    
+    .logo h1 {
+        font-size: 18px;
+    }
+    
+    #coefficient-value {
+        font-size: 2.5rem !important;
+    }
+    
+    .btn {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+    
+    /* Улучшаем отображение истории предиктов */
+    .history-cell {
+        padding: 6px 3px;
+        font-size: 12px;
+    }
+}
+
+/* Исправления для ориентации экрана */
+@media screen and (max-height: 600px) and (orientation: landscape) {
+    .hero {
+        padding: 10px 0;
+    }
+    
+    .hero-content {
+        margin-bottom: 10px;
+    }
+    
+    .hero-content h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    
+    .hero-content p {
+        margin-bottom: 10px;
+    }
+    
+    .predictor {
+        margin: 10px 0;
+    }
+    
+    .predictor-header {
+        padding: 10px;
+    }
+    
+    .predictor-content {
+        padding: 10px;
+    }
+    
+    .loading-container {
+        min-height: 100px;
+    }
+    
+    #coefficient-value {
+        font-size: 2.5rem !important;
+    }
+}
+
+/* Исправления для устройств с высоким DPI */
+@media 
+(-webkit-min-device-pixel-ratio: 2), 
+(min-resolution: 192dpi) {
+    .logo img, .hero-image img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Улучшения для сенсорных устройств */
+@media (hover: none) and (pointer: coarse) {
+    /* Увеличиваем размер интерактивных элементов для сенсорных экранов */
+    .btn, 
+    nav ul li a,
+    .footer-links a {
+        padding: 12px 16px;
+        min-height: 44px; /* Apple рекомендует минимум 44px для сенсорных целей */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Улучшаем отзывчивость кнопок */
+    .btn:active {
+        transform: scale(0.98);
+        transition: transform 0.1s;
+    }
+}
+
+/* Исправляем проблемы с фиксированными элементами на iOS */
+@supports (-webkit-touch-callout: none) {
+    .mobile-menu-overlay,
+    .promo-banner {
+        position: fixed;
+    }
+    
+    /* Исправляем проблему с 100vh на iOS */
+    .mobile-menu-overlay,
+    nav {
+        height: -webkit-fill-available;
+    }
+}

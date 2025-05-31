@@ -1,0 +1,122 @@
+/* Стили для анимированного фона коэффициентов и эффекта конфетти */
+
+/* Анимированный фон для коэффициентов */
+.animated-coefficient {
+    position: relative;
+    z-index: 1;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent !important;
+    transition: all 0.3s ease;
+}
+
+/* Градиентный фон для обычных коэффициентов (до 2.0) */
+.coefficient-low {
+    background-image: linear-gradient(45deg, #a3be8c, #8fbcbb);
+    text-shadow: 0 0 10px rgba(163, 190, 140, 0.5);
+}
+
+/* Градиентный фон для средних коэффициентов (2.0-5.0) */
+.coefficient-medium {
+    background-image: linear-gradient(45deg, #ebcb8b, #d08770);
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+    text-shadow: 0 0 15px rgba(235, 203, 139, 0.6);
+}
+
+/* Градиентный фон для высоких коэффициентов (5.0+) */
+.coefficient-high {
+    background-image: linear-gradient(45deg, #ffeaa7, #ff7675, #fab1a0, #ffeaa7);
+    background-size: 300% 300%;
+    animation: gradientShift 2s ease infinite, pulsate 1s ease-in-out infinite alternate;
+    text-shadow: 0 0 20px rgba(255, 234, 167, 0.7);
+    font-weight: bold;
+}
+
+/* Анимация смещения градиента */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Анимация пульсации */
+@keyframes pulsate {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+}
+
+/* Стили для конфетти */
+.confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #f0f0f0;
+    opacity: 0;
+    transform: translateY(0) rotate(0deg);
+    pointer-events: none;
+}
+
+/* Анимация для конфетти */
+@keyframes confettiFall {
+    0% {
+        opacity: 1;
+        transform: translateY(-10px) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(100px) rotate(720deg);
+    }
+}
+
+/* Стили для эффекта взрыва */
+.explosion {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,234,167,1) 0%, rgba(255,234,167,0) 70%);
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Анимация для эффекта взрыва */
+@keyframes explode {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.8;
+    }
+    100% {
+        width: 300px;
+        height: 300px;
+        opacity: 0;
+    }
+}
+
+/* Анимация свечения для высоких коэффициентов */
+@keyframes glow {
+    0% { box-shadow: 0 0 5px rgba(255, 234, 167, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(255, 234, 167, 0.8), 0 0 30px rgba(255, 234, 167, 0.6); }
+    100% { box-shadow: 0 0 5px rgba(255, 234, 167, 0.5); }
+}
+
+/* Применяем свечение к карточке с высоким коэффициентом */
+.glow-effect {
+    animation: glow 2s infinite;
+}

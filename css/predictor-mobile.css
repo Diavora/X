@@ -1,0 +1,189 @@
+/**
+ * Улучшенные стили для предиктора на мобильных устройствах
+ */
+
+/* Улучшения для предиктора */
+@media screen and (max-width: 768px) {
+    /* Улучшаем внешний вид блока предиктора */
+    .predictor {
+        border-radius: 12px;
+        margin: 15px 0;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Улучшаем внешний вид заголовка предиктора */
+    .predictor-header {
+        padding: 12px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .predictor-header h3 {
+        font-size: 18px;
+        margin: 0;
+    }
+    
+    /* Улучшаем внешний вид содержимого предиктора */
+    .predictor-content {
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    /* Улучшаем внешний вид элементов управления */
+    .predictor-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+    }
+    
+    /* Улучшаем внешний вид кнопки генерации */
+    #generate-btn {
+        width: 100%;
+        padding: 15px;
+        font-size: 16px;
+        border-radius: 8px;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.2s ease;
+    }
+    
+    #generate-btn:active {
+        transform: scale(0.98);
+    }
+    
+    /* Улучшаем внешний вид блока загрузки */
+    .loading-container {
+        min-height: 120px;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+    
+    /* Улучшаем внешний вид результата предикта */
+    .prediction-result {
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Улучшаем внешний вид коэффициента */
+    #coefficient-value {
+        font-size: 2.8rem !important;
+        margin: 10px 0;
+        padding: 5px 15px;
+        border-radius: 8px;
+        display: inline-block;
+    }
+}
+
+/* Дополнительные улучшения для маленьких экранов */
+@media screen and (max-width: 576px) {
+    /* Уменьшаем отступы */
+    .predictor-content {
+        padding: 12px;
+    }
+    
+    .predictor-header {
+        padding: 10px 12px;
+    }
+    
+    /* Уменьшаем размер шрифта */
+    .predictor-header h3 {
+        font-size: 16px;
+    }
+    
+    /* Уменьшаем размер коэффициента */
+    #coefficient-value {
+        font-size: 2.5rem !important;
+    }
+    
+    /* Уменьшаем размер кнопки */
+    #generate-btn {
+        padding: 12px;
+        font-size: 15px;
+    }
+    
+    /* Уменьшаем размер блока загрузки */
+    .loading-container {
+        min-height: 100px;
+        padding: 12px;
+    }
+    
+    /* Уменьшаем размер спиннера */
+    .loading-spinner {
+        width: 35px;
+        height: 35px;
+        border-width: 3px;
+    }
+}
+
+/* Улучшения для очень маленьких экранов */
+@media screen and (max-width: 375px) {
+    /* Уменьшаем отступы */
+    .predictor-content {
+        padding: 10px;
+    }
+    
+    .predictor-header {
+        padding: 8px 10px;
+    }
+    
+    /* Уменьшаем размер шрифта */
+    .predictor-header h3 {
+        font-size: 15px;
+    }
+    
+    /* Уменьшаем размер коэффициента */
+    #coefficient-value {
+        font-size: 2.2rem !important;
+    }
+    
+    /* Уменьшаем размер кнопки */
+    #generate-btn {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    /* Уменьшаем размер блока загрузки */
+    .loading-container {
+        min-height: 90px;
+        padding: 10px;
+    }
+    
+    /* Уменьшаем размер спиннера */
+    .loading-spinner {
+        width: 30px;
+        height: 30px;
+        border-width: 2px;
+    }
+}
+
+/* Улучшения для ландшафтной ориентации */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .predictor-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    
+    .loading-container, 
+    .prediction-result {
+        min-height: 100px;
+    }
+    
+    #coefficient-value {
+        font-size: 2.2rem !important;
+    }
+}

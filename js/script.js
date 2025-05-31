@@ -1,5 +1,5 @@
 // Основные переменные
-const generateBtn = document.getElementById('generate-btn');
+// Объявляем глобальные переменные для элементов DOM
 const startBtn = document.getElementById('start-btn');
 const coefficientValue = document.getElementById('coefficient-value');
 const timerValue = document.getElementById('timer-value');
@@ -17,14 +17,69 @@ const successPredictions = document.getElementById('success-predictions');
 const closePredictions = document.getElementById('close-predictions');
 const failedPredictions = document.getElementById('failed-predictions');
 
-// Данные для предиктов
+// Глобальные переменные
 let predictions = [];
-let timer = 120; // Таймер на 2 минуты (120 секунд)
+let timer = 120; // 2 минуты в секундах
 let timerInterval;
-let isGenerating = false;
+let accuracy = 95; // Начальная точность предсказаний
+let isGenerating = false; // Флаг для отслеживания процесса генерации при загрузке страницы
+let generateBtn; // Глобальная переменная для кнопки генерации предикта
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Страница загружена, начинаем инициализацию');
+    
+    // Инициализируем таймер
+    updateTimer();
+    setInterval(updateTimer, 1000);
+    
+    // Инициализируем график
+    initChart();
+    
+    // Инициализируем 3D-визуализацию полета
+    if (window.flightVisualization) {
+        window.flightVisualization.init();
+    }
+    
+    // Добавляем обработчик для кнопки генерации предикта
+    generateBtn = document.getElementById('generate-btn');
+    console.log('Кнопка генерации:', generateBtn);
+    
+    if (generateBtn) {
+        // Добавляем прямой обработчик клика
+        generateBtn.onclick = function() {
+            console.log('Кнопка нажата!');
+            if (!isGenerating) {
+                generatePrediction();
+            } else {
+                console.log('Генерация уже идет, нельзя запустить новую');
+            }
+        };
+        console.log('Обработчик клика добавлен');
+    } else {
+        console.error('Кнопка генерации не найдена!');
+    }
+    
+    // Добавляем обработчик для кнопки автоматической генерации
+    const autoBtn = document.getElementById('auto-generate-btn');
+    if (autoBtn) {
+        autoBtn.addEventListener('click', toggleAutomaticGeneration);
+    }
+    
+    // Добавляем обработчик для кнопки повтора 3D-полета
+    const replayFlightBtn = document.getElementById('replay-flight-btn');
+    if (replayFlightBtn) {
+        replayFlightBtn.addEventListener('click', function() {
+            const coefficientElement = document.getElementById('coefficient-value');
+            if (coefficientElement) {
+                const coefficient = parseFloat(coefficientElement.textContent);
+                if (!isNaN(coefficient) && window.flightVisualization) {
+                    window.flightVisualization.start(coefficient);
+                }
+            }
+        });
+    }
+    
     // Запускаем таймер для кнопки генерации
     startTimer();
     
@@ -179,6 +234,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Генерация предикта при нажатии на кнопку
+    // Удаляем все существующие обработчики событий
+    generateBtn.removeEventListener('click', generatePrediction);
+    // Добавляем новый обработчик
     generateBtn.addEventListener('click', generatePrediction);
 
     // Запуск таймера
@@ -270,23 +328,46 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Функция генерации предикта
+// Функция генерации предикта с прогрессивной загрузкой
 function generatePrediction() {
     if (isGenerating) return;
 
     isGenerating = true;
+    
+    // Получаем ссылки на элементы
+    const loadingContainer = document.getElementById('loading-prediction');
+    const predictionResult = document.getElementById('prediction-result');
+    const loadingText = document.getElementById('loading-text');
+    const loadingProgressBar = document.getElementById('loading-progress-bar');
+    const step1 = document.getElementById('step-1');
+    const step2 = document.getElementById('step-2');
+    const step3 = document.getElementById('step-3');
+    const line1 = document.getElementById('line-1');
+    const line2 = document.getElementById('line-2');
+    
     // Блокируем кнопку на 2 минуты
     generateBtn.disabled = true;
     generateBtn.textContent = 'Генерация...';
     generateBtn.classList.add('generating');
-
-    // Создаем анимацию "поиска" коэффициента
-    let animationCounter = 0;
-    const animationValues = [];
-    const animationDuration = 7000; // 7 секунд анимации
-    const animationInterval = 100; // Обновление каждые 100мс
-    const animationSteps = animationDuration / animationInterval;
-
+    
+    // Скрываем результат и показываем анимацию загрузки
+    predictionResult.style.display = 'none';
+    loadingContainer.style.display = 'flex';
+    
+    // Сбрасываем состояние шагов
+    step1.classList.add('active');
+    step2.classList.remove('active', 'completed');
+    step3.classList.remove('active', 'completed');
+    line1.classList.remove('active');
+    line2.classList.remove('active');
+    
+    document.querySelector('.loading-step:nth-child(1) .loading-step-label').classList.add('active');
+    document.querySelector('.loading-step:nth-child(2) .loading-step-label').classList.remove('active');
+    document.querySelector('.loading-step:nth-child(3) .loading-step-label').classList.remove('active');
+    
+    // Сбрасываем прогресс-бар
+    loadingProgressBar.style.width = '0%';
+    
     // Генерируем конечный коэффициент заранее
     // Используем распределение, при котором мелкие коэффициенты выпадают чаще
     let finalCoefficient;
@@ -303,87 +384,78 @@ function generatePrediction() {
     else {
         finalCoefficient = (Math.random() * 5.0 + 5.0).toFixed(2);
     }
-
-    // Добавляем класс для анимации
-    coefficientValue.classList.add('animating');
-
-    // Добавляем анимацию загрузки
-    const loadingIndicator = document.createElement('div');
-    loadingIndicator.className = 'loading-indicator';
-    document.querySelector('.prediction-result').prepend(loadingIndicator);
-
-    // Запускаем анимацию
-    const animationTimer = setInterval(() => {
-        animationCounter++;
-
-        // Генерируем случайное значение, которое постепенно приближается к финальному
-        const progress = animationCounter / animationSteps;
-        let currentValue;
-
-        if (progress < 0.7) {
-            // В начале анимации показываем более случайные значения, но с уклоном в сторону мелких коэффициентов
-            // В 70% случаев показываем мелкие коэффициенты
-            if (Math.random() < 0.7) {
-                currentValue = (Math.random() * 0.96 + 1.04).toFixed(2);
-            } 
-            // В 20% случаев показываем средние коэффициенты
-            else if (Math.random() < 0.9) {
-                currentValue = (Math.random() * 3.0 + 2.0).toFixed(2);
-            }
-            // В 10% случаев показываем высокие коэффициенты
-            else {
-                currentValue = (Math.random() * 5.0 + 5.0).toFixed(2);
-            }
-        } else {
-            // Ближе к концу приближаемся к финальному значению
-            const randomFactor = 1 - progress;
-            const diff = Math.random() * 2 * randomFactor - randomFactor;
-            currentValue = (parseFloat(finalCoefficient) + diff).toFixed(2);
+    
+    // Шаг 1: Сбор данных (0-30%)
+    loadingText.textContent = 'Сбор данных...';
+    loadingText.classList.add('loading-text-change');
+    
+    // Анимируем прогресс от 0% до 30%
+    animateProgress(loadingProgressBar, 0, 30, 1500, () => {
+        // Шаг 2: Анализ данных (30-70%)
+        step1.classList.remove('active');
+        step1.classList.add('completed');
+        step2.classList.add('active');
+        line1.classList.add('active');
+        
+        document.querySelector('.loading-step:nth-child(1) .loading-step-label').classList.remove('active');
+        document.querySelector('.loading-step:nth-child(2) .loading-step-label').classList.add('active');
+        
+        loadingText.classList.remove('loading-text-change');
+        setTimeout(() => {
+            loadingText.textContent = 'Анализ данных...';
+            loadingText.classList.add('loading-text-change');
+        }, 50);
+        
+        // Анимируем прогресс от 30% до 70%
+        animateProgress(loadingProgressBar, 30, 70, 2000, () => {
+            // Шаг 3: Генерация предсказания (70-100%)
+            step2.classList.remove('active');
+            step2.classList.add('completed');
+            step3.classList.add('active');
+            line2.classList.add('active');
             
-            // Убедимся, что коэффициент не меньше 1.04
-            if (parseFloat(currentValue) < 1.04) {
-                currentValue = (1.04).toFixed(2);
-            }
-        }
-
-        // Обновляем UI
-        coefficientValue.textContent = currentValue + 'x';
-        coefficientValue.style.color = getColorByCoefficient(currentValue);
-
-        // Обновляем индикатор загрузки
-        const loadingProgress = Math.min(progress * 1.2, 1);
-        loadingIndicator.style.setProperty('--loading-progress', loadingProgress);
-
-        // Если анимация завершена
-        if (animationCounter >= animationSteps) {
-            clearInterval(animationTimer);
-
-            // Устанавливаем финальное значение
-            coefficientValue.textContent = finalCoefficient + 'x';
-            coefficientValue.style.color = getColorByCoefficient(finalCoefficient);
-
-            // Добавляем эффект завершения
-            loadingIndicator.classList.add('complete');
-
-            // Добавление в историю
-            addToHistory(finalCoefficient);
-
-            // Удаляем индикатор после анимации
+            document.querySelector('.loading-step:nth-child(2) .loading-step-label').classList.remove('active');
+            document.querySelector('.loading-step:nth-child(3) .loading-step-label').classList.add('active');
+            
+            loadingText.classList.remove('loading-text-change');
             setTimeout(() => {
-                loadingIndicator.remove();
-                coefficientValue.classList.remove('animating');
-            }, 1000);
-
-            // Сброс состояния генерации, но кнопка остается заблокированной
-            isGenerating = false;
-            // Кнопка остается заблокированной до истечения таймера
-            generateBtn.textContent = 'Сгенерировать предикт';
-            generateBtn.classList.remove('generating');
-
-            // Обновление статистики
-            updateStatistics();
-        }
-    }, animationInterval);
+                loadingText.textContent = 'Генерация предсказания...';
+                loadingText.classList.add('loading-text-change');
+            }, 50);
+            
+            // Анимируем прогресс от 70% до 100%
+            animateProgress(loadingProgressBar, 70, 100, 1500, () => {
+                // Обновляем отображение коэффициента
+                coefficientValue.textContent = finalCoefficient + 'x';
+                coefficientValue.style.color = getColorByCoefficient(finalCoefficient);
+                
+                // Добавляем предикт в историю
+                addToHistory(finalCoefficient);
+                
+                // Задержка перед показом результата
+                setTimeout(() => {
+                    // Скрываем анимацию загрузки и показываем результат
+                    loadingContainer.style.display = 'none';
+                    predictionResult.style.display = 'block';
+                    predictionResult.classList.add('loaded');
+                    
+                    // Сброс состояния генерации, но кнопка остается заблокированной
+                    isGenerating = false;
+                    // Кнопка остается заблокированной до истечения таймера
+                    generateBtn.textContent = 'Сгенерировать предикт';
+                    generateBtn.classList.remove('generating');
+                    
+                    // Обновление статистики
+                    updateStatistics();
+                    
+                    // Удаляем класс анимации после завершения
+                    setTimeout(() => {
+                        predictionResult.classList.remove('loaded');
+                    }, 500);
+                }, 800);
+            });
+        });
+    });
 }
 
 // Функция добавления предикта в историю
@@ -500,6 +572,147 @@ function startAutomaticGeneration() {
     }, 120000); // 2 минуты в миллисекундах
 }
 
+// Функция генерации предикта с прогрессивной загрузкой
+function generatePrediction() {
+    console.log('Функция generatePrediction вызвана');
+    
+    if (isGenerating) {
+        console.log('Генерация уже идет, выходим');
+        return;
+    }
+
+    console.log('Начинаем генерацию предикта');
+    isGenerating = true;
+    
+    // Получаем ссылки на элементы
+    const loadingContainer = document.getElementById('loading-prediction');
+    const predictionResult = document.getElementById('prediction-result');
+    const loadingText = document.getElementById('loading-text');
+    const loadingProgressBar = document.getElementById('loading-progress-bar');
+    const step1 = document.getElementById('step-1');
+    const step2 = document.getElementById('step-2');
+    const step3 = document.getElementById('step-3');
+    const line1 = document.getElementById('line-1');
+    const line2 = document.getElementById('line-2');
+    
+    // Блокируем кнопку на 2 минуты
+    generateBtn.disabled = true;
+    generateBtn.textContent = 'Генерация...';
+    generateBtn.classList.add('generating');
+    
+    // Скрываем результат и показываем анимацию загрузки
+    predictionResult.style.display = 'none';
+    loadingContainer.style.display = 'flex';
+    
+    // Сбрасываем состояние шагов
+    step1.classList.add('active');
+    step2.classList.remove('active', 'completed');
+    step3.classList.remove('active', 'completed');
+    line1.classList.remove('active');
+    line2.classList.remove('active');
+    
+    document.querySelector('.loading-step:nth-child(1) .loading-step-label').classList.add('active');
+    document.querySelector('.loading-step:nth-child(2) .loading-step-label').classList.remove('active');
+    document.querySelector('.loading-step:nth-child(3) .loading-step-label').classList.remove('active');
+    
+    // Сбрасываем прогресс-бар
+    loadingProgressBar.style.width = '0%';
+    
+    // Генерируем конечный коэффициент заранее
+    // Используем распределение, при котором мелкие коэффициенты выпадают чаще
+    let finalCoefficient;
+    
+    // В 70% случаев генерируем мелкие коэффициенты от 1.04 до 2.0
+    if (Math.random() < 0.7) {
+        finalCoefficient = (Math.random() * 0.96 + 1.04).toFixed(2);
+    } 
+    // В 20% случаев генерируем средние коэффициенты от 2.0 до 5.0
+    else if (Math.random() < 0.9) {
+        finalCoefficient = (Math.random() * 3.0 + 2.0).toFixed(2);
+    }
+    // В 10% случаев генерируем высокие коэффициенты от 5.0 до 10.0
+    else {
+        finalCoefficient = (Math.random() * 5.0 + 5.0).toFixed(2);
+    }
+    
+    // Шаг 1: Сбор данных (0-30%)
+    loadingText.textContent = 'Сбор данных...';
+    loadingText.classList.add('loading-text-change');
+    
+    // Анимируем прогресс от 0% до 30%
+    animateProgress(loadingProgressBar, 0, 30, 1500, () => {
+        // Шаг 2: Анализ данных (30-70%)
+        step1.classList.remove('active');
+        step1.classList.add('completed');
+        step2.classList.add('active');
+        line1.classList.add('active');
+        
+        document.querySelector('.loading-step:nth-child(1) .loading-step-label').classList.remove('active');
+        document.querySelector('.loading-step:nth-child(2) .loading-step-label').classList.add('active');
+        
+        loadingText.textContent = 'Анализ данных...';
+        loadingText.classList.remove('loading-text-change');
+        setTimeout(() => {
+            loadingText.classList.add('loading-text-change');
+        }, 50);
+        
+        // Анимируем прогресс от 30% до 70%
+        animateProgress(loadingProgressBar, 30, 70, 2000, () => {
+            // Шаг 3: Генерация предсказания (70-100%)
+            step2.classList.remove('active');
+            step2.classList.add('completed');
+            step3.classList.add('active');
+            line2.classList.add('active');
+            
+            document.querySelector('.loading-step:nth-child(2) .loading-step-label').classList.remove('active');
+            document.querySelector('.loading-step:nth-child(3) .loading-step-label').classList.add('active');
+            
+            loadingText.textContent = 'Генерация предсказания...';
+            loadingText.classList.remove('loading-text-change');
+            setTimeout(() => {
+                loadingText.classList.add('loading-text-change');
+            }, 50);
+            
+            // Анимируем прогресс от 70% до 100%
+            animateProgress(loadingProgressBar, 70, 100, 1500, () => {
+                // Завершение анимации и отображение результата
+                setTimeout(() => {
+                    // Скрываем анимацию загрузки и показываем результат
+                    loadingContainer.style.display = 'none';
+                    predictionResult.style.display = 'flex';
+                    
+                    // Отображаем сгенерированный коэффициент
+                    const coefficientElement = document.getElementById('coefficient-value');
+                    coefficientElement.textContent = finalCoefficient + 'x';
+                    
+                    // Применяем анимированный фон вместо простого цвета
+                    applyAnimatedBackground(coefficientElement, finalCoefficient);
+                    
+                    // Запускаем 3D-визуализацию полета
+                    if (window.flightVisualization) {
+                        window.flightVisualization.start(finalCoefficient);
+                    }
+                    
+                    // Обновляем статистику и историю
+                    addToHistory(finalCoefficient);
+                    updateStatistics();
+                    
+                    // Запускаем таймер до следующего предикта
+                    resetTimer();
+                    
+                    // Разблокируем кнопку через 2 минуты
+                    setTimeout(() => {
+                        generateBtn.disabled = false;
+                        generateBtn.textContent = 'Сгенерировать предикт';
+                        generateBtn.classList.remove('generating');
+                        isGenerating = false;
+                    }, 120000); // 2 минуты
+                }, 500);
+            });
+        });
+    });
+}
+
 // Функция сброса таймера
 function resetTimer() {
     clearInterval(timerInterval);
@@ -539,6 +752,80 @@ function updateTimerDisplay() {
     const minutes = Math.floor(timer / 60);
     const seconds = timer % 60;
     timerValue.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+// Функция добавления предсказания в историю
+function addToHistory(coefficient) {
+    // Форматируем текущую дату и время
+    const now = new Date();
+    const time = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+    const date = now.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' });
+    
+    // Симулируем фактический коэффициент (для демонстрации)
+    // В реальном приложении это был бы фактический результат игры
+    let actualCoefficient;
+    
+    // С вероятностью 85% фактический результат близок к предсказанному
+    if (Math.random() < 0.85) {
+        // Фактический результат близок к предсказанному (±0.2)
+        const variation = (Math.random() * 0.4 - 0.2);
+        actualCoefficient = (parseFloat(coefficient) + variation).toFixed(2);
+        // Убедимся, что фактический коэффициент не меньше 1.0
+        if (actualCoefficient < 1.0) actualCoefficient = 1.0;
+    } else {
+        // Фактический результат сильно отличается
+        actualCoefficient = (Math.random() * 9 + 1).toFixed(2);
+    }
+    
+    // Определяем статус предсказания
+    let status;
+    const diff = Math.abs(parseFloat(coefficient) - parseFloat(actualCoefficient));
+    
+    if (diff <= 0.2) {
+        status = 'success'; // Точное предсказание
+    } else if (diff <= 0.5) {
+        status = 'close'; // Близкое предсказание
+    } else {
+        status = 'fail'; // Неточное предсказание
+    }
+    
+    // Создаем новую запись в истории
+    const historyBody = document.getElementById('history-body');
+    const historyItem = document.createElement('div');
+    historyItem.className = `history-row ${status}`;
+    
+    historyItem.innerHTML = `
+        <div class="history-cell">${date} ${time}</div>
+        <div class="history-cell">${coefficient}x</div>
+        <div class="history-cell">${actualCoefficient}x</div>
+        <div class="history-cell">
+            <span class="status-indicator"></span>
+            ${status === 'success' ? 'Точно' : status === 'close' ? 'Близко' : 'Неточно'}
+        </div>
+    `;
+    
+    // Добавляем запись в начало истории
+    if (historyBody.firstChild) {
+        historyBody.insertBefore(historyItem, historyBody.firstChild);
+    } else {
+        historyBody.appendChild(historyItem);
+    }
+    
+    // Ограничиваем количество записей в истории (показываем последние 10)
+    const historyItems = historyBody.querySelectorAll('.history-row');
+    if (historyItems.length > 10) {
+        for (let i = 10; i < historyItems.length; i++) {
+            historyBody.removeChild(historyItems[i]);
+        }
+    }
+    
+    // Сохраняем предикт
+    predictions.push({
+        time,
+        predicted: parseFloat(coefficient),
+        actual: parseFloat(actualCoefficient),
+        status
+    });
 }
 
 // Функция обновления статистики
@@ -674,7 +961,6 @@ function displayDefaultHighStats() {
     const accuracyFill = document.querySelector('.accuracy-fill');
     const accuracyValue = document.querySelector('.accuracy-value');
     if (accuracyFill && accuracyValue) {
-        accuracyFill.style.width = `${accuracy}%`;
         accuracyValue.textContent = `${accuracy}% точность`;
     }
     
@@ -682,14 +968,35 @@ function displayDefaultHighStats() {
     animateStatisticsUpdate();
 }
 
+// Функция анимации прогресс-бара
+function animateProgress(element, start, end, duration, callback) {
+    const startTime = performance.now();
+    
+    function updateProgress(currentTime) {
+        const elapsedTime = currentTime - startTime;
+        const progress = Math.min(elapsedTime / duration, 1);
+        const currentValue = start + progress * (end - start);
+        
+        element.style.width = currentValue + '%';
+        
+        if (progress < 1) {
+            requestAnimationFrame(updateProgress);
+        } else {
+            if (callback) callback();
+        }
+    }
+    
+    requestAnimationFrame(updateProgress);
+}
+
 // Функция получения цвета в зависимости от коэффициента
 function getColorByCoefficient(coefficient) {
     coefficient = parseFloat(coefficient);
     
-    if (coefficient < 2) {
-        return '#00b894'; // Зеленый для низких коэффициентов
-    } else if (coefficient < 5) {
-        return '#1dd1a1'; // Светло-зеленый для средних коэффициентов
+    if (coefficient < 2.0) {
+        return '#a3be8c'; // Зеленый для низких коэффициентов
+    } else if (coefficient < 5.0) {
+        return '#ebcb8b'; // Светло-зеленый для средних коэффициентов
     } else {
         return '#ffeaa7'; // Желтый для высоких коэффициентов
     }

@@ -1,0 +1,210 @@
+/**
+ * Улучшенные стили для истории предиктов на мобильных устройствах
+ */
+
+/* Улучшения для истории предиктов */
+@media screen and (max-width: 768px) {
+    /* Улучшаем внешний вид блока истории */
+    .history {
+        margin: 15px 0;
+    }
+    
+    .history h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    
+    /* Улучшаем внешний вид таблицы истории */
+    .history-table {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Улучшаем внешний вид заголовка таблицы */
+    .history-header {
+        padding: 10px 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .history-header .history-cell {
+        font-size: 14px;
+        font-weight: 600;
+        text-align: center;
+    }
+    
+    /* Улучшаем внешний вид строк таблицы */
+    .history-row {
+        padding: 8px 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .history-row:last-child {
+        border-bottom: none;
+    }
+    
+    /* Улучшаем внешний вид ячеек таблицы */
+    .history-cell {
+        font-size: 14px;
+        text-align: center;
+        padding: 5px;
+    }
+    
+    /* Добавляем горизонтальную прокрутку для таблицы */
+    .history-body {
+        max-height: 300px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Стилизуем полосу прокрутки */
+    .history-body::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    
+    .history-body::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+    }
+    
+    .history-body::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 3px;
+    }
+}
+
+/* Дополнительные улучшения для маленьких экранов */
+@media screen and (max-width: 576px) {
+    /* Уменьшаем размер шрифта */
+    .history h3 {
+        font-size: 16px;
+    }
+    
+    /* Уменьшаем отступы */
+    .history-header {
+        padding: 8px 3px;
+    }
+    
+    .history-header .history-cell {
+        font-size: 13px;
+    }
+    
+    .history-row {
+        padding: 6px 3px;
+    }
+    
+    .history-cell {
+        font-size: 13px;
+        padding: 3px;
+    }
+    
+    /* Улучшаем отображение статусов */
+    .status-pending, .status-success, .status-fail {
+        padding: 3px 5px;
+        border-radius: 3px;
+        font-size: 12px;
+    }
+    
+    /* Ограничиваем высоту таблицы */
+    .history-body {
+        max-height: 250px;
+    }
+    
+    /* Улучшаем отображение таблицы в альбомной ориентации */
+    @media (orientation: landscape) {
+        .history-body {
+            max-height: 150px;
+        }
+    }
+}
+
+/* Улучшения для очень маленьких экранов */
+@media screen and (max-width: 375px) {
+    /* Уменьшаем размер шрифта */
+    .history h3 {
+        font-size: 15px;
+    }
+    
+    /* Уменьшаем отступы */
+    .history-header .history-cell {
+        font-size: 12px;
+    }
+    
+    .history-cell {
+        font-size: 12px;
+        padding: 2px;
+    }
+    
+    /* Улучшаем отображение статусов */
+    .status-pending, .status-success, .status-fail {
+        padding: 2px 4px;
+        font-size: 11px;
+    }
+    
+    /* Ограничиваем высоту таблицы */
+    .history-body {
+        max-height: 200px;
+    }
+}
+
+/* Специальные стили для карточного представления на очень маленьких экранах */
+@media screen and (max-width: 320px) {
+    /* Преобразуем таблицу в карточки */
+    .history-table {
+        display: block;
+    }
+    
+    .history-header {
+        display: none;
+    }
+    
+    .history-body {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .history-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 5px;
+        padding: 8px;
+        background: rgba(30, 30, 30, 0.5);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .history-cell {
+        text-align: left;
+        padding: 3px;
+    }
+    
+    .history-cell:nth-child(1)::before {
+        content: "Время: ";
+        opacity: 0.7;
+    }
+    
+    .history-cell:nth-child(2)::before {
+        content: "Предикт: ";
+        opacity: 0.7;
+    }
+    
+    .history-cell:nth-child(3)::before {
+        content: "Факт: ";
+        opacity: 0.7;
+    }
+    
+    .history-cell:nth-child(4) {
+        grid-column: 1 / -1;
+        text-align: center;
+    }
+}
