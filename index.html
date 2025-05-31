@@ -2,17 +2,25 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Lucky Jet Predictor - Предсказатель коэффициентов</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/chart-styles.css">
+    <link rel="stylesheet" href="css/mobile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta name="description" content="Получите точные предсказания коэффициентов для игры Lucky Jet и увеличьте свои шансы на выигрыш.">
     <meta name="theme-color" content="#121212">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
+    <div class="mobile-menu-overlay"></div>
     <div class="container">
         <header>
             <div class="logo">
@@ -25,6 +33,12 @@
                 <span></span>
             </div>
             <nav>
+                <div class="nav-header">
+                    <div class="nav-logo">
+                        <img src="img/downloaded/logo.png" alt="Lucky Jet Predictor" class="nav-logo-img">
+                        <h2>Lucky Jet <span>Predictor</span></h2>
+                    </div>
+                </div>
                 <ul>
                     <li><a href="#hero" class="nav-link active" data-target="hero">Главная</a></li>
                     <li><a href="#stats-section" class="nav-link" data-target="stats-section">Статистика</a></li>

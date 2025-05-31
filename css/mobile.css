@@ -1,0 +1,553 @@
+/* Мобильные стили для Lucky Jet Predictor */
+
+/* Базовые стили для мобильных устройств */
+@media screen and (max-width: 992px) {
+    * {
+        box-sizing: border-box;
+    }
+    
+    .container {
+        width: 100%;
+        padding: 0 15px;
+        max-width: 100%;
+        margin: 0 auto;
+        overflow-x: hidden;
+    }
+    
+    header {
+        padding: 10px 0;
+    }
+    
+    .mobile-menu-toggle {
+        display: flex;
+    }
+    
+    nav {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        height: 100vh;
+        background-color: var(--background-card);
+        z-index: 1000;
+        transition: var(--transition);
+        padding: 60px 20px 20px;
+        box-shadow: var(--box-shadow-lg);
+    }
+    
+    nav.active {
+        left: 0;
+    }
+    
+    nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    nav ul li {
+        margin: 15px 0;
+        width: 100%;
+    }
+    
+    nav ul li a {
+        display: block;
+        padding: 10px 0;
+        width: 100%;
+        font-size: 18px;
+    }
+    
+    .hero {
+        flex-direction: column;
+        padding: 30px 15px;
+    }
+    
+    .hero-content {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .hero-image {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .hero-image img {
+        max-width: 80%;
+    }
+}
+
+/* Стили для навигации */
+.nav-header {
+    display: none;
+    padding: 15px;
+    border-bottom: 1px solid rgba(184, 184, 184, 0.1);
+    margin-bottom: 20px;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo-img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.nav-logo h2 {
+    font-size: 20px;
+    margin: 0;
+}
+
+/* Стили для планшетов */
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 16px;
+    }
+    
+    .nav-header {
+        display: block;
+    }
+    
+    h2 {
+        font-size: 26px;
+        line-height: 1.3;
+        margin-bottom: 15px;
+    }
+    
+    h3 {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .hero-buttons .btn {
+        width: 100%;
+        margin: 10px 0;
+        padding: 12px 20px;
+    }
+    
+    .predictor {
+        margin-top: 20px;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    
+    .predictor-header {
+        padding: 15px;
+    }
+    
+    .predictor-content {
+        padding: 15px;
+    }
+    
+    .predictor-controls {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .timer {
+        margin-top: 5px;
+        width: 100%;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    #timer-value {
+        font-size: 24px;
+        margin-right: 10px;
+    }
+    
+    .prediction-result {
+        margin-top: 20px;
+        padding: 20px 15px;
+        border-radius: 12px;
+        box-shadow: var(--box-shadow-sm);
+    }
+    
+    #coefficient-value {
+        font-size: 60px;
+        line-height: 1;
+        margin-bottom: 10px;
+    }
+    
+    .coefficient-label {
+        margin-bottom: 15px;
+    }
+    
+    .recommendation {
+        flex-direction: column;
+        padding: 15px;
+    }
+    
+    .recommendation-icon {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .recommendation-text {
+        text-align: center;
+    }
+    
+    .history-table {
+        overflow-x: auto;
+    }
+    
+    .history-body {
+        max-height: 250px;
+    }
+    
+    .chart-section {
+        padding: 15px;
+    }
+    
+    .chart-container-wrapper {
+        height: 200px;
+    }
+    
+    footer {
+        padding: 20px 0;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-logo {
+        margin-bottom: 20px;
+    }
+    
+    .footer-links {
+        margin-bottom: 20px;
+    }
+}
+
+/* Стили для мобильных телефонов */
+@media screen and (max-width: 576px) {
+    body {
+        font-size: 14px;
+    }
+    
+    .container {
+        padding: 0 10px;
+    }
+    
+    header {
+        padding: 10px 0;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .logo {
+        margin-bottom: 0;
+        margin-right: auto;
+    }
+    
+    .logo h1 {
+        font-size: 20px;
+    }
+    
+    #logo-img {
+        width: 36px;
+        height: 36px;
+    }
+    
+    h2 {
+        font-size: 22px;
+    }
+    
+    h3 {
+        font-size: 18px;
+    }
+    
+    .predictor-header {
+        flex-direction: column;
+        padding: 12px;
+    }
+    
+    .predictor-header h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+    
+    .status {
+        margin-top: 5px;
+    }
+    
+    #coefficient-value {
+        font-size: 50px;
+    }
+    
+    .coefficient-label {
+        font-size: 12px;
+    }
+    
+    .accuracy-value {
+        font-size: 12px;
+    }
+    
+    .btn {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+    
+    .history-cell {
+        padding: 10px 5px;
+        font-size: 12px;
+    }
+    
+    .trend-indicator {
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    .trend-icon {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+    
+    .trend-text {
+        font-size: 12px;
+        text-align: center;
+    }
+    
+    .chart-container-wrapper {
+        height: 180px;
+    }
+    
+    .promo-banner {
+        width: 90%;
+        padding: 15px;
+    }
+    
+    .promo-header h3 {
+        font-size: 18px;
+    }
+    
+    .promo-code {
+        padding: 10px;
+    }
+    
+    .promo-text {
+        font-size: 16px;
+    }
+    
+    .copy-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    .promo-footer .btn {
+        width: 100%;
+    }
+}
+
+/* Стили для очень маленьких экранов */
+@media screen and (max-width: 375px) {
+    body {
+        font-size: 13px;
+    }
+    
+    .container {
+        padding: 0 5px;
+        min-width: unset;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    h2 {
+        font-size: 20px;
+    }
+    
+    h3 {
+        font-size: 16px;
+    }
+    
+    .logo h1 {
+        font-size: 18px;
+    }
+    
+    #logo-img {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .predictor-header h3 {
+        font-size: 16px;
+    }
+    
+    #coefficient-value {
+        font-size: 42px;
+    }
+    
+    .btn {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+    
+    .history-cell {
+        padding: 8px 4px;
+        font-size: 11px;
+    }
+    
+    .chart-container-wrapper {
+        height: 150px;
+    }
+
+    /* Дополнительные исправления для маленьких экранов */
+    .predictor, .monochrome-card, .recommendations, .history-section {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: 8px;
+    }
+
+    .predictor-content, .recommendation {
+        padding: 10px 5px;
+    }
+
+    .mobile-menu-toggle {
+        margin-right: 5px;
+    }
+}
+
+/* Стили для очень узких экранов */
+@media screen and (max-width: 320px) {
+    body {
+        font-size: 12px;
+    }
+    
+    .container {
+        padding: 0 3px;
+    }
+    
+    .logo h1 {
+        font-size: 16px;
+    }
+    
+    #logo-img {
+        width: 28px;
+        height: 28px;
+    }
+    
+    h2 {
+        font-size: 18px;
+    }
+    
+    h3 {
+        font-size: 14px;
+    }
+    
+    .predictor-header h3 {
+        font-size: 14px;
+    }
+    
+    #coefficient-value {
+        font-size: 36px;
+    }
+    
+    .btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    .history-cell {
+        padding: 6px 3px;
+        font-size: 10px;
+    }
+}
+
+/* Исправления для мобильного меню */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    backdrop-filter: blur(3px);
+}
+
+.mobile-menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+body.menu-open {
+    overflow: hidden;
+}
+
+/* Исправления для горизонтальной прокрутки */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Исправления для таблицы истории на мобильных */
+@media screen and (max-width: 576px) {
+    .history-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    
+    .history-header, .history-row {
+        min-width: 480px;
+        width: 100%;
+    }
+    
+    /* Дополнительные исправления для предиктора и истории */
+    .predictor, .history-section, .chart-section, .recommendations {
+        width: 100%;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        box-sizing: border-box;
+    }
+    
+    .predictor-content {
+        width: 100%;
+        padding: 15px 10px;
+    }
+    
+    .prediction-result {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Фикс для графика */
+    .chart-container {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+    }
+}
+
+/* Улучшения для сенсорных устройств */
+@media (hover: none) {
+    .btn:active, .nav-link:active {
+        transform: scale(0.96);
+    }
+}
