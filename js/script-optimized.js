@@ -43,6 +43,8 @@
      * Инициализация приложения
      */
     function init() {
+        console.log('Инициализация приложения...');
+        
         // Кэшируем DOM-элементы при загрузке для повышения производительности
         cacheDOMElements();
         
@@ -62,6 +64,8 @@
      * Кэширование DOM-элементов для повышения производительности
      */
     function cacheDOMElements() {
+        console.log('Кэширование DOM-элементов...');
+        
         DOM.generateBtn = document.getElementById('generate-btn');
         DOM.loadingContainer = document.getElementById('loading-prediction');
         DOM.predictionResult = document.getElementById('prediction-result');
@@ -69,6 +73,9 @@
         DOM.historyBody = document.getElementById('history-body');
         DOM.startBtn = document.getElementById('start-btn');
         DOM.casinoBtn = document.getElementById('casino-btn');
+        
+        console.log('Кнопка "Начать сейчас":', DOM.startBtn);
+        console.log('Кнопка "Играть в казино":', DOM.casinoBtn);
         
         // Проверка наличия всех необходимых элементов
         const missingElements = Object.entries(DOM)

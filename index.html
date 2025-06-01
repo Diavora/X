@@ -62,8 +62,8 @@
                     <h2 class="monochrome-text-glow">Предикты коэффициентов для игры Lucky Jet</h2>
                     <p>Получите точные предсказания коэффициентов и увеличьте свои шансы на выигрыш</p>
                     <div class="hero-buttons">
-                        <button id="start-btn" class="btn primary-btn monochrome-gradient monochrome-glow">Начать сейчас</button>
-                        <button id="casino-btn" class="btn accent-btn monochrome-gradient">Играть в казино</button>
+                        <button id="start-btn" class="btn primary-btn monochrome-gradient monochrome-glow" onclick="document.querySelector('.predictor').scrollIntoView({behavior: 'smooth', block: 'start'}); setTimeout(function() { document.getElementById('generate-btn').click(); }, 800);">Начать сейчас</button>
+                        <button id="casino-btn" class="btn accent-btn monochrome-gradient" onclick="window.open('https://1win-official-site.com', '_blank');">Играть в казино</button>
                     </div>
                 </div>
                 <div class="hero-image">
@@ -259,6 +259,7 @@
     <script src="js/script-optimized.js"></script>
     <script src="js/chart.js"></script>
     <script src="js/mobile-menu.js"></script>
+    <script src="js/mobile-buttons.js"></script>
     <script src="js/effects.js"></script>
     <!-- Скрипт 3D-анимации удален -->
 </body>

@@ -1,20 +1,43 @@
 /**
- * u0423u043bu0443u0447u0448u0435u043du043du044bu0435 u0441u0442u0438u043bu0438 u0434u043bu044f u043au043du043eu043fu043eu043a u043du0430 u043cu043eu0431u0438u043bu044cu043du044bu0445 u0443u0441u0442u0440u043eu0439u0441u0442u0432u0430u0445
+ * Улучшенные стили для кнопок на мобильных устройствах
  */
 
-/* u0423u043bu0443u0447u0448u0435u043du0438u044f u0434u043bu044f u043au043du043eu043fu043eu043a u043du0430 u043cu043eu0431u0438u043bu044cu043du044bu0445 u0443u0441u0442u0440u043eu0439u0441u0442u0432u0430u0445 */
+/* Общие стили для всех кнопок независимо от размера экрана */
+.btn {
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent; /* Убираем подсветку при нажатии на iOS */
+    touch-action: manipulation; /* Оптимизация для сенсорных устройств */
+    position: relative; /* Для псевдоэлементов */
+    z-index: 5; /* Увеличиваем z-index для лучшей кликабельности */
+}
+
+/* Добавляем псевдоэлемент для увеличения области нажатия */
+.btn::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    z-index: -1;
+}
+
+/* Улучшения для кнопок на мобильных устройствах */
 @media screen and (max-width: 768px) {
-    /* u041eu0431u0449u0438u0435 u0441u0442u0438u043bu0438 u0434u043bu044f u0432u0441u0435u0445 u043au043du043eu043fu043eu043a */
+    /* Общие стили для кнопок в мобильной версии */
     .btn {
         cursor: pointer;
         border: none;
         font-weight: 600;
         transition: all 0.2s ease;
-        -webkit-tap-highlight-color: transparent; /* u0423u0431u0438u0440u0430u0435u043c u043fu043eu0434u0441u0432u0435u0442u043au0443 u043fu0440u0438 u043du0430u0436u0430u0442u0438u0438 u043du0430 iOS */
-        touch-action: manipulation; /* u041eu043fu0442u0438u043cu0438u0437u0430u0446u0438u044f u0434u043bu044f u0441u0435u043du0441u043eu0440u043du044bu0445 u0443u0441u0442u0440u043eu0439u0441u0442u0432 */
+        -webkit-tap-highlight-color: transparent; /* Убираем подсветку при нажатии на iOS */
+        touch-action: manipulation; /* Оптимизация для сенсорных устройств */
     }
     
-    /* u0421u0442u0438u043bu0438 u0434u043bu044f u043au043du043eu043fu043eu043a u0432 u0448u0430u043fu043au0435 */
+    /* Стили для кнопок в шапке */
     .hero-buttons {
         display: flex;
         flex-direction: column;
