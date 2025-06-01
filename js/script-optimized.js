@@ -13,7 +13,9 @@
         loadingContainer: null,
         predictionResult: null,
         coefficientElement: null,
-        historyBody: null
+        historyBody: null,
+        startBtn: null,
+        casinoBtn: null
     };
 
     // Состояние приложения
@@ -65,10 +67,12 @@
         DOM.predictionResult = document.getElementById('prediction-result');
         DOM.coefficientElement = document.getElementById('coefficient-value');
         DOM.historyBody = document.getElementById('history-body');
+        DOM.startBtn = document.getElementById('start-btn');
+        DOM.casinoBtn = document.getElementById('casino-btn');
         
         // Проверка наличия всех необходимых элементов
         const missingElements = Object.entries(DOM)
-            .filter(([key, element]) => !element)
+            .filter(([key, element]) => !element && key !== 'startBtn' && key !== 'casinoBtn') // Не показываем предупреждение для необязательных кнопок
             .map(([key]) => key);
             
         if (missingElements.length > 0) {
@@ -95,9 +99,35 @@
                 event.stopPropagation();
                 generatePrediction();
             }, 300));
-            
-            console.log('Обработчики событий добавлены');
         }
+        
+        // Добавляем обработчики для кнопок "Начать сейчас" и "Играть в казино"
+        if (DOM.startBtn) {
+            DOM.startBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                // Плавно прокручиваем страницу к блоку предиктора
+                const predictorSection = document.querySelector('.predictor');
+                if (predictorSection) {
+                    predictorSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Добавляем небольшую задержку и запускаем генерацию предикта
+                    setTimeout(() => {
+                        if (DOM.generateBtn) {
+                            DOM.generateBtn.click();
+                        }
+                    }, 800);
+                }
+            });
+        }
+        
+        if (DOM.casinoBtn) {
+            DOM.casinoBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                // Открываем сайт казино в новой вкладке
+                window.open('https://1win-official-site.com', '_blank');
+            });
+        }
+        
+        console.log('Обработчики событий добавлены');
         
         // Добавляем обработчик для сохранения данных при закрытии страницы
         window.addEventListener('beforeunload', saveHistoryToStorage);

@@ -1,0 +1,128 @@
+/**
+ * u0423u043bu0443u0447u0448u0435u043du043du044bu0435 u0441u0442u0438u043bu0438 u0434u043bu044f u043au043du043eu043fu043eu043a u043du0430 u043cu043eu0431u0438u043bu044cu043du044bu0445 u0443u0441u0442u0440u043eu0439u0441u0442u0432u0430u0445
+ */
+
+/* u0423u043bu0443u0447u0448u0435u043du0438u044f u0434u043bu044f u043au043du043eu043fu043eu043a u043du0430 u043cu043eu0431u0438u043bu044cu043du044bu0445 u0443u0441u0442u0440u043eu0439u0441u0442u0432u0430u0445 */
+@media screen and (max-width: 768px) {
+    /* u041eu0431u0449u0438u0435 u0441u0442u0438u043bu0438 u0434u043bu044f u0432u0441u0435u0445 u043au043du043eu043fu043eu043a */
+    .btn {
+        cursor: pointer;
+        border: none;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        -webkit-tap-highlight-color: transparent; /* u0423u0431u0438u0440u0430u0435u043c u043fu043eu0434u0441u0432u0435u0442u043au0443 u043fu0440u0438 u043du0430u0436u0430u0442u0438u0438 u043du0430 iOS */
+        touch-action: manipulation; /* u041eu043fu0442u0438u043cu0438u0437u0430u0446u0438u044f u0434u043bu044f u0441u0435u043du0441u043eu0440u043du044bu0445 u0443u0441u0442u0440u043eu0439u0441u0442u0432 */
+    }
+    
+    /* u0421u0442u0438u043bu0438 u0434u043bu044f u043au043du043eu043fu043eu043a u0432 u0448u0430u043fu043au0435 */
+    .hero-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+        margin-top: 20px;
+    }
+    
+    /* u0421u0442u0438u043bu0438 u0434u043bu044f u043au043du043eu043fu043au0438 "u041du0430u0447u0430u0442u044c u0441u0435u0439u0447u0430u0441" */
+    #start-btn {
+        width: 100%;
+        padding: 15px 20px;
+        font-size: 16px;
+        border-radius: 8px;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* u0414u043eu0431u0430u0432u043bu044fu0435u043c u044du0444u0444u0435u043au0442 u043du0430u0436u0430u0442u0438u044f */
+    #start-btn:active {
+        transform: scale(0.98);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* u0421u0442u0438u043bu0438 u0434u043bu044f u043au043du043eu043fu043au0438 "u0418u0433u0440u0430u0442u044c u0432 u043au0430u0437u0438u043du043e" */
+    #casino-btn {
+        width: 100%;
+        padding: 15px 20px;
+        font-size: 16px;
+        border-radius: 8px;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* u0414u043eu0431u0430u0432u043bu044fu0435u043c u044du0444u0444u0435u043au0442 u043du0430u0436u0430u0442u0438u044f */
+    #casino-btn:active {
+        transform: scale(0.98);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* u0414u043eu0431u0430u0432u043bu044fu0435u043c u044du0444u0444u0435u043au0442 u043fu0443u043bu044cu0441u0430u0446u0438u0438 u0434u043bu044f u043fu0440u0438u0432u043bu0435u0447u0435u043du0438u044f u0432u043du0438u043cu0430u043du0438u044f */
+    @keyframes button-pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+        }
+    }
+    
+    #start-btn {
+        animation: button-pulse 2s infinite;
+    }
+}
+
+/* u0414u043eu043fu043eu043bu043du0438u0442u0435u043bu044cu043du044bu0435 u0443u043bu0443u0447u0448u0435u043du0438u044f u0434u043bu044f u043cu0430u043bu0435u043du044cu043au0438u0445 u044du043au0440u0430u043du043eu0432 */
+@media screen and (max-width: 576px) {
+    /* u0423u043cu0435u043du044cu0448u0430u0435u043c u0440u0430u0437u043cu0435u0440 u043au043du043eu043fu043eu043a */
+    #start-btn, #casino-btn {
+        padding: 12px 15px;
+        font-size: 15px;
+    }
+    
+    /* u0423u043cu0435u043du044cu0448u0430u0435u043c u043eu0442u0441u0442u0443u043fu044b u043cu0435u0436u0434u0443 u043au043du043eu043fu043au0430u043cu0438 */
+    .hero-buttons {
+        gap: 12px;
+        margin-top: 15px;
+    }
+}
+
+/* u0423u043bu0443u0447u0448u0435u043du0438u044f u0434u043bu044f u043eu0447u0435u043du044c u043cu0430u043bu0435u043du044cu043au0438u0445 u044du043au0440u0430u043du043eu0432 */
+@media screen and (max-width: 375px) {
+    /* u0423u043cu0435u043du044cu0448u0430u0435u043c u0440u0430u0437u043cu0435u0440 u043au043du043eu043fu043eu043a */
+    #start-btn, #casino-btn {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+    
+    /* u0423u043cu0435u043du044cu0448u0430u0435u043c u043eu0442u0441u0442u0443u043fu044b u043cu0435u0436u0434u0443 u043au043du043eu043fu043au0430u043cu0438 */
+    .hero-buttons {
+        gap: 10px;
+        margin-top: 12px;
+    }
+}
+
+/* u0423u043bu0443u0447u0448u0435u043du0438u044f u0434u043bu044f u043bu0430u043du0434u0448u0430u0444u0442u043du043eu0439 u043eu0440u0438u0435u043du0442u0430u0446u0438u0438 */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    /* u0420u0430u0441u043fu043eu043bu0430u0433u0430u0435u043c u043au043du043eu043fu043au0438 u0432 u0440u044fu0434 u0434u043bu044f u043bu0430u043du0434u0448u0430u0444u0442u043du043eu0439 u043eu0440u0438u0435u043du0442u0430u0446u0438u0438 */
+    .hero-buttons {
+        flex-direction: row;
+        gap: 10px;
+    }
+    
+    #start-btn, #casino-btn {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
