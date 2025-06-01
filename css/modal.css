@@ -1,0 +1,267 @@
+/**
+ * Стили для модального окна с промокодом
+ */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-container {
+    background-color: #121212;
+    background-image: linear-gradient(to bottom, #1a1a1a, #121212);
+    border-radius: 15px;
+    padding: 30px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(255, 157, 0, 0.3);
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+    border: 2px solid #ff9d00;
+    overflow: hidden;
+}
+
+.modal-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 157, 0, 0.1) 0%, transparent 70%);
+    z-index: -1;
+}
+
+.modal-overlay.active .modal-container {
+    transform: scale(1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-color);
+    background: none;
+    border: none;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.modal-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #ff9d00;
+    text-shadow: 0 0 10px rgba(255, 157, 0, 0.7);
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.modal-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(to right, transparent, #ff9d00, transparent);
+}
+
+.modal-content {
+    margin-bottom: 20px;
+}
+
+.modal-content p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.promo-code {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff9d00, #ff6b00);
+    color: #000;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 24px;
+    margin: 15px 0 25px;
+    letter-spacing: 3px;
+    box-shadow: 0 0 20px rgba(255, 157, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: all;
+    position: relative;
+    border: 2px dashed rgba(255, 255, 255, 0.5);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.promo-code:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px var(--accent-color-glow);
+}
+
+.promo-code:active {
+    transform: scale(0.98);
+}
+
+.promo-code.copied {
+    background-color: #4CAF50;
+    animation: pulse 0.5s;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.promo-code::after {
+    content: '\f0c5';
+    font-family: 'Font Awesome 5 Free';
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.modal-btn {
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.modal-btn.primary {
+    background: linear-gradient(135deg, #ff9d00, #ff6b00);
+    color: #000;
+    box-shadow: 0 0 15px rgba(255, 157, 0, 0.7);
+    border: 2px solid #ff9d00;
+    font-weight: 700;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-btn.primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: 0.5s;
+}
+
+.modal-btn.primary:hover::before {
+    left: 100%;
+}
+
+.modal-btn.secondary {
+    background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+    color: #ffffff;
+    border: 2px solid #444;
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-btn.secondary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: 0.5s;
+}
+
+.modal-btn.secondary:hover::before {
+    left: 100%;
+}
+
+.modal-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-btn:active {
+    transform: translateY(0);
+}
+
+/* Мобильные стили */
+@media screen and (max-width: 768px) {
+    .modal-container {
+        padding: 20px;
+        width: 95%;
+    }
+    
+    .modal-title {
+        font-size: 20px;
+    }
+    
+    .modal-content p {
+        font-size: 14px;
+    }
+    
+    .promo-code {
+        font-size: 18px;
+        padding: 8px 15px;
+    }
+    
+    .modal-buttons {
+        flex-direction: column;
+    }
+    
+    .modal-btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

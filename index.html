@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="css/history-mobile.css">
     <link rel="stylesheet" href="css/buttons-mobile.css">
     <link rel="stylesheet" href="css/effects.css">
-    <!-- CSS для 3D-анимации удален -->
+    <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -63,7 +63,7 @@
                     <p>Получите точные предсказания коэффициентов и увеличьте свои шансы на выигрыш</p>
                     <div class="hero-buttons">
                         <button id="start-btn" class="btn primary-btn monochrome-gradient monochrome-glow" onclick="document.querySelector('.predictor').scrollIntoView({behavior: 'smooth', block: 'start'}); setTimeout(function() { document.getElementById('generate-btn').click(); }, 800);">Начать сейчас</button>
-                        <button id="casino-btn" class="btn accent-btn monochrome-gradient" onclick="window.open('https://1win-official-site.com', '_blank');">Играть в казино</button>
+                        <button id="casino-btn" class="btn accent-btn monochrome-gradient">Играть в казино</button>
                     </div>
                 </div>
                 <div class="hero-image">
@@ -204,7 +204,7 @@
             <div class="footer-content">
                 <div class="footer-logo">
                     <h3>Lucky Jet <span>Predictor</span></h3>
-                    <p>© 2025 Lucky Jet Predictor. Все права защищены.</p>
+                    <p> 2025 Lucky Jet Predictor. Все права защищены.</p>
                 </div>
                 <div class="footer-links">
                     <h4>Ссылки</h4>
@@ -251,16 +251,28 @@
     </div>
     <div id="promo-overlay" class="promo-overlay"></div>
 
-    <!-- 3D-библиотеки удалены -->
-    <!-- Используем оптимизированную версию скрипта для повышения производительности и стабильности -->
-    <!-- <script src="js/debug.js"></script> -->
-    <!-- <script src="js/script.js"></script> -->
-    <!-- <script src="js/script-fixed.js"></script> -->
+    <!-- Модальное окно с промокодом -->
+    <div class="modal-overlay" id="promo-modal">
+        <div class="modal-container">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <h3 class="modal-title">Получите бонусы в казино!</h3>
+            <div class="modal-content">
+                <p>Используйте наш промокод для получения эксклюзивных бонусов:</p>
+                <div class="promo-code">ACGG</div>
+                <p>Скопируйте промокод и нажмите кнопку ниже, чтобы перейти в казино и активировать бонусы.</p>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn primary" id="go-to-casino">Перейти в казино</button>
+                <button class="modal-btn secondary" id="modal-cancel">Отмена</button>
+            </div>
+        </div>
+    </div>
+
     <script src="js/script-optimized.js"></script>
     <script src="js/chart.js"></script>
     <script src="js/mobile-menu.js"></script>
     <script src="js/mobile-buttons.js"></script>
+    <script src="js/modal.js"></script>
     <script src="js/effects.js"></script>
-    <!-- Скрипт 3D-анимации удален -->
 </body>
 </html>
