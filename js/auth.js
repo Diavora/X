@@ -1,5 +1,6 @@
 /**
  * Система авторизации для доступа к сайту
+ * Адаптирована для работы в Telegram WebApp
  */
 
 (function() {
@@ -8,10 +9,62 @@
     // Пароль для доступа к сайту
     const ACCESS_PASSWORD = 'INSHYNE25';
     
+    // Проверка на запуск в Telegram WebApp
+    function isTelegramWebApp() {
+        return window.Telegram && window.Telegram.WebApp;
+    }
+    
+    // Безопасная работа с localStorage
+    function safeGetItem(key) {
+        try {
+            return localStorage.getItem(key);
+        } catch (e) {
+            console.warn('Ошибка при доступе к localStorage:', e);
+            return null;
+        }
+    }
+    
+    function safeSetItem(key, value) {
+        try {
+            localStorage.setItem(key, value);
+            return true;
+        } catch (e) {
+            console.warn('Ошибка при записи в localStorage:', e);
+            return false;
+        }
+    }
+    
+    // Используем cookie как резервный вариант
+    function setCookie(name, value, days) {
+        let expires = '';
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = '; expires=' + date.toUTCString();
+        }
+        document.cookie = name + '=' + (value || '') + expires + '; path=/';
+    }
+    
+    function getCookie(name) {
+        const nameEQ = name + '=';
+        const ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+    
     // Проверяем, авторизован ли пользователь
     function checkAuth() {
-        // Проверяем, есть ли в localStorage запись об успешной авторизации
-        const isAuthorized = localStorage.getItem('auth_access') === 'granted';
+        // Если это Telegram WebApp, пропускаем авторизацию для избежания ошибок
+        if (isTelegramWebApp()) {
+            return; // Не показываем авторизацию в Telegram
+        }
+        
+        // Проверяем авторизацию в localStorage или cookie
+        const isAuthorized = safeGetItem('auth_access') === 'granted' || getCookie('auth_access') === 'granted';
         
         if (!isAuthorized) {
             // Если пользователь не авторизован, показываем окно авторизации
@@ -88,8 +141,9 @@
             const password = passwordInput.value.trim();
             
             if (password === ACCESS_PASSWORD) {
-                // Если пароль верный, сохраняем в localStorage и закрываем модальное окно
-                localStorage.setItem('auth_access', 'granted');
+                // Если пароль верный, сохраняем в localStorage и cookie, затем закрываем модальное окно
+                safeSetItem('auth_access', 'granted');
+                setCookie('auth_access', 'granted', 7); // Храним 7 дней
                 closeAuthModal();
             } else {
                 // Если пароль неверный, показываем сообщение об ошибке

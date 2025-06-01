@@ -1,0 +1,121 @@
+/* u0421u0442u0438u043bu0438 u0434u043bu044f u0430u0434u0430u043fu0442u0430u0446u0438u0438 u0441u0430u0439u0442u0430 u043a Telegram WebApp */
+
+.telegram-webapp {
+    /* u041eu0441u043du043eu0432u043du044bu0435 u043du0430u0441u0442u0440u043eu0439u043au0438 */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    overflow-x: hidden;
+}
+
+/* u0421u043au0440u044bu0432u0430u0435u043c u0432u0441u0435 u043fu043eu043fu0430u043fu044b u0438 u043cu043eu0434u0430u043bu044cu043du044bu0435 u043eu043au043du0430 u0432 Telegram */
+.telegram-webapp .auth-overlay {
+    display: none !important;
+}
+
+/* u0423u043bu0443u0447u0448u0430u0435u043c u043eu0442u0437u044bu0432u0447u0438u0432u043eu0441u0442u044c u0438u043du0442u0435u0440u0444u0435u0439u0441u0430 */
+.telegram-webapp button,
+.telegram-webapp .button,
+.telegram-webapp [role="button"] {
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* u0423u043bu0443u0447u0448u0430u0435u043c u0441u043au0440u043eu043bu043b */
+.telegram-webapp ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+.telegram-webapp ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.telegram-webapp ::-webkit-scrollbar-thumb {
+    background: rgba(255, 157, 0, 0.5);
+    border-radius: 2px;
+}
+
+/* u0418u0441u043fu0440u0430u0432u043bu044fu0435u043c u043fu0440u043eu0431u043bu0435u043cu044b u0441 u0432u044bu0441u043eu0442u043eu0439 u0432 Telegram WebApp */
+.telegram-webapp .container {
+    min-height: calc(100vh - 20px);
+    padding-bottom: 60px; /* u0414u043eu043fu043eu043bu043du0438u0442u0435u043bu044cu043du044bu0439 u043eu0442u0441u0442u0443u043f u0441u043du0438u0437u0443 */
+}
+
+/* u0423u043bu0443u0447u0448u0430u0435u043c u0432u0438u0434u0438u043cu043eu0441u0442u044c u0442u0435u043au0441u0442u0430 */
+.telegram-webapp h1, 
+.telegram-webapp h2, 
+.telegram-webapp h3, 
+.telegram-webapp h4, 
+.telegram-webapp p {
+    text-rendering: optimizeLegibility;
+}
+
+/* u0418u0441u043fu0440u0430u0432u043bu044fu0435u043c u043fu0440u043eu0431u043bu0435u043cu044b u0441 u0444u0438u043au0441u0438u0440u043eu0432u0430u043du043du044bu043cu0438 u044du043bu0435u043cu0435u043du0442u0430u043cu0438 */
+.telegram-webapp .fixed-element,
+.telegram-webapp .sticky-element {
+    position: relative !important;
+    z-index: 1;
+}
+
+/* u0423u043bu0443u0447u0448u0430u0435u043c u043fu0440u043eu0438u0437u0432u043eu0434u0438u0442u0435u043bu044cu043du043eu0441u0442u044c u0430u043du0438u043cu0430u0446u0438u0439 */
+.telegram-webapp * {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* u0414u043eu0431u0430u0432u043bu044fu0435u043c u043fu043eu0434u0434u0435u0440u0436u043au0443 u0442u0435u043cu043du043eu0439 u0442u0435u043cu044b Telegram */
+@media (prefers-color-scheme: dark) {
+    .telegram-webapp {
+        color-scheme: dark;
+    }
+}
+
+/* u0418u0441u043fu0440u0430u0432u043bu044fu0435u043c u043fu0440u043eu0431u043bu0435u043cu044b u0441 u0444u043eu043au0443u0441u043eu043c u043du0430 u043fu043eu043bu044fu0445 u0432u0432u043eu0434u0430 */
+.telegram-webapp input:focus,
+.telegram-webapp textarea:focus,
+.telegram-webapp select:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(255, 157, 0, 0.5) !important;
+}
+
+/* u0414u043eu0431u0430u0432u043bu044fu0435u043c u043fu043eu0434u0434u0435u0440u0436u043au0443 u0436u0435u0441u0442u043eu0432 */
+.telegram-webapp {
+    touch-action: pan-x pan-y;
+}
+
+/* u0418u0441u043fu0440u0430u0432u043bu044fu0435u043c u043fu0440u043eu0431u043bu0435u043cu044b u0441 z-index */
+.telegram-webapp .modal,
+.telegram-webapp .popup,
+.telegram-webapp .overlay {
+    z-index: 9 !important; /* u0421u043du0438u0436u0430u0435u043c z-index, u0447u0442u043eu0431u044b u043du0435 u043au043eu043du0444u043bu0438u043au0442u043eu0432u0430u0442u044c u0441 Telegram UI */
+}
+
+/* u0423u043bu0443u0447u0448u0430u0435u043c u043fu0440u043eu0438u0437u0432u043eu0434u0438u0442u0435u043bu044cu043du043eu0441u0442u044c u0434u043bu044f u0441u043bu0430u0431u044bu0445 u0443u0441u0442u0440u043eu0439u0441u0442u0432 */
+.telegram-webapp .animation,
+.telegram-webapp .animated {
+    animation-duration: 0.3s !important;
+    transition-duration: 0.3s !important;
+}
+
+/* u0418u0441u043fu0440u0430u0432u043bu044fu0435u043c u043fu0440u043eu0431u043bu0435u043cu044b u0441 u043eu0431u0440u0430u0431u043eu0442u043au043eu0439 u043eu0448u0438u0431u043eu043a */
+.telegram-webapp .error-message {
+    display: none !important; /* u0421u043au0440u044bu0432u0430u0435u043c u0432u0441u0435 u0441u043eu043eu0431u0449u0435u043du0438u044f u043eu0431 u043eu0448u0438u0431u043au0430u0445 */
+}
+
+/* u0414u043eu0431u0430u0432u043bu044fu0435u043c u0441u043fu0435u0446u0438u0430u043bu044cu043du044bu0435 u0441u0442u0438u043bu0438 u0434u043bu044f u043au043du043eu043fu043eu043a u0432 Telegram */
+.telegram-webapp .mobile-button {
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    opacity: 0.95;
+}
+
+.telegram-webapp .mobile-button:active {
+    opacity: 0.8;
+    transform: scale(0.98);
+}

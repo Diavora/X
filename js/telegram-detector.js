@@ -1,0 +1,98 @@
+/**
+ * u041cu043eu0434u0443u043bu044c u0434u043bu044f u043eu0431u043du0430u0440u0443u0436u0435u043du0438u044f Telegram WebApp u0438 u043eu0431u0440u0430u0431u043eu0442u043au0438 u043eu0448u0438u0431u043eu043a
+ */
+
+(function() {
+    'use strict';
+    
+    // u041fu0440u043eu0432u0435u0440u044fu0435u043c, u0437u0430u043fu0443u0449u0435u043du043e u043bu0438 u043fu0440u0438u043bu043eu0436u0435u043du0438u0435 u0432 Telegram WebApp
+    function detectTelegramWebApp() {
+        // u041fu0440u043eu0432u0435u0440u043au0430 u043du0430 u043du0430u043bu0438u0447u0438u0435 Telegram WebApp API
+        const isTelegramApp = window.Telegram && window.Telegram.WebApp;
+        
+        // u041fu0440u043eu0432u0435u0440u043au0430 u043du0430 u043du0430u043bu0438u0447u0438u0435 u0441u043fu0435u0446u0438u0444u0438u0447u043du044bu0445 u043fu0430u0440u0430u043cu0435u0442u0440u043eu0432 u0432 URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const hasTgWebAppParam = urlParams.has('tgWebAppData') || urlParams.has('tgWebAppStartParam');
+        
+        // u041fu0440u043eu0432u0435u0440u043au0430 User-Agent u043du0430 u043du0430u043bu0438u0447u0438u0435 u0443u043fu043eu043cu0438u043du0430u043du0438u044f Telegram
+        const userAgent = navigator.userAgent.toLowerCase();
+        const hasTelegramInUA = userAgent.includes('telegram') || userAgent.includes('tgweb');
+        
+        // u0415u0441u043bu0438 u0445u043eu0442u044f u0431u044b u043eu0434u0438u043d u0438u0437 u043fu0440u0438u0437u043du0430u043au043eu0432 u043fu043eu043bu043eu0436u0438u0442u0435u043bu044cu043du044bu0439, u0441u0447u0438u0442u0430u0435u043c u0447u0442u043e u044du0442u043e Telegram
+        return isTelegramApp || hasTgWebAppParam || hasTelegramInUA;
+    }
+    
+    // u0423u0441u0442u0430u043du0430u0432u043bu0438u0432u0430u0435u043c u0433u043bu043eu0431u0430u043bu044cu043du044bu0439 u043eu0431u0440u0430u0431u043eu0442u0447u0438u043a u043eu0448u0438u0431u043eu043a
+    function setupErrorHandling() {
+        window.addEventListener('error', function(event) {
+            console.warn('u041fu0435u0440u0435u0445u0432u0430u0447u0435u043du0430 u043eu0448u0438u0431u043au0430:', event.error);
+            
+            // u041fu0440u0435u0434u043eu0442u0432u0440u0430u0449u0430u0435u043c u043fu043eu043au0430u0437 u0441u0442u0430u043du0434u0430u0440u0442u043du043eu0433u043e u0441u043eu043eu0431u0449u0435u043du0438u044f u043eu0431 u043eu0448u0438u0431u043au0435
+            event.preventDefault();
+            
+            // u041du0435 u043fu043eu043au0430u0437u044bu0432u0430u0435u043c u043fu043eu043bu044cu0437u043eu0432u0430u0442u0435u043bu044e u043eu0448u0438u0431u043au0438 u0432 Telegram
+            return true;
+        }, true);
+        
+        // u041fu0435u0440u0435u0445u0432u0430u0442u044bu0432u0430u0435u043c u043du0435u043eu0431u0440u0430u0431u043eu0442u0430u043du043du044bu0435 u043eu0448u0438u0431u043au0438 u043fu0440u043eu043cu0438u0441u043eu0432
+        window.addEventListener('unhandledrejection', function(event) {
+            console.warn('u041du0435u043eu0431u0440u0430u0431u043eu0442u0430u043du043du043eu0435 u043eu0442u043au043bu043eu043du0435u043du0438u0435 u043fu0440u043eu043cu0438u0441u0430:', event.reason);
+            
+            // u041fu0440u0435u0434u043eu0442u0432u0440u0430u0449u0430u0435u043c u043fu043eu043au0430u0437 u0441u0442u0430u043du0434u0430u0440u0442u043du043eu0433u043e u0441u043eu043eu0431u0449u0435u043du0438u044f u043eu0431 u043eu0448u0438u0431u043au0435
+            event.preventDefault();
+            
+            return true;
+        });
+    }
+    
+    // u0410u0434u0430u043fu0442u0438u0440u0443u0435u043c u0441u0430u0439u0442 u0434u043bu044f u0440u0430u0431u043eu0442u044b u0432 Telegram
+    function adaptForTelegram() {
+        // u0414u043eu0431u0430u0432u043bu044fu0435u043c u043au043bu0430u0441u0441 u043a body u0434u043bu044f u0441u043fu0435u0446u0438u0444u0438u0447u0435u0441u043au0438u0445 u0441u0442u0438u043bu0435u0439
+        document.body.classList.add('telegram-webapp');
+        
+        // u041eu0442u043au043bu044eu0447u0430u0435u043c u043du0435u043au043eu0442u043eu0440u044bu0435 u0444u0443u043du043au0446u0438u0438, u043au043eu0442u043eu0440u044bu0435 u043cu043eu0433u0443u0442 u0432u044bu0437u044bu0432u0430u0442u044c u043fu0440u043eu0431u043bu0435u043cu044b u0432 Telegram
+        window.isTelegramWebApp = true;
+        
+        // u0421u043eu0437u0434u0430u0435u043c u0433u043bu043eu0431u0430u043bu044cu043du044bu0439 u043eu0431u044au0435u043au0442 u0434u043bu044f u0431u0435u0437u043eu043fu0430u0441u043du043eu0433u043e u0445u0440u0430u043du0435u043du0438u044f u0434u0430u043du043du044bu0445
+        window.safeStorage = {
+            getItem: function(key) {
+                try {
+                    return localStorage.getItem(key);
+                } catch (e) {
+                    console.warn('u041eu0448u0438u0431u043au0430 u043fu0440u0438 u0434u043eu0441u0442u0443u043fu0435 u043a localStorage:', e);
+                    return null;
+                }
+            },
+            setItem: function(key, value) {
+                try {
+                    localStorage.setItem(key, value);
+                    return true;
+                } catch (e) {
+                    console.warn('u041eu0448u0438u0431u043au0430 u043fu0440u0438 u0437u0430u043fu0438u0441u0438 u0432 localStorage:', e);
+                    return false;
+                }
+            }
+        };
+    }
+    
+    // u0418u043du0438u0446u0438u0430u043bu0438u0437u0430u0446u0438u044f
+    function init() {
+        // u0423u0441u0442u0430u043du0430u0432u043bu0438u0432u0430u0435u043c u043eu0431u0440u0430u0431u043eu0442u0447u0438u043a u043eu0448u0438u0431u043eu043a u0432 u043bu044eu0431u043eu043c u0441u043bu0443u0447u0430u0435
+        setupErrorHandling();
+        
+        // u041fu0440u043eu0432u0435u0440u044fu0435u043c, u0437u0430u043fu0443u0449u0435u043du043e u043bu0438 u043fu0440u0438u043bu043eu0436u0435u043du0438u0435 u0432 Telegram
+        const isTelegram = detectTelegramWebApp();
+        
+        if (isTelegram) {
+            console.log('u041eu0431u043du0430u0440u0443u0436u0435u043d u0437u0430u043fu0443u0441u043a u0432 Telegram WebApp');
+            adaptForTelegram();
+        }
+    }
+    
+    // u0417u0430u043fu0443u0441u043au0430u0435u043c u0438u043du0438u0446u0438u0430u043bu0438u0437u0430u0446u0438u044e u043fu0440u0438 u0437u0430u0433u0440u0443u0437u043au0435 DOM
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
