@@ -126,13 +126,8 @@
             });
         }
         
-        if (DOM.casinoBtn) {
-            DOM.casinoBtn.addEventListener('click', function(event) {
-                event.preventDefault();
-                // Открываем сайт казино в новой вкладке
-                window.open('https://1win-official-site.com', '_blank');
-            });
-        }
+        // Обработчик для кнопки 'Играть в казино' теперь находится в modal.js
+        // и открывает модальное окно с промокодом вместо прямого перехода на сайт казино
         
         console.log('Обработчики событий добавлены');
         
