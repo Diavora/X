@@ -1,17 +1,58 @@
 /**
  * Система авторизации для доступа к сайту
- * Адаптирована для работы в Telegram WebApp
+ * Модуль авторизации с паролем для доступа к сайту
+ * Обновлен для лучшей работы с Telegram WebApp и обработки сворачивания/разворачивания
  */
 
 (function() {
     'use strict';
     
-    // Пароль для доступа к сайту
-    const ACCESS_PASSWORD = 'INSHYNE25';
+    // Константы
+    const CORRECT_PASSWORD = 'INSHYNE25';
+    const AUTH_STORAGE_KEY = 'auth_access';
+    const AUTH_COOKIE_NAME = 'auth_access';
+    const AUTH_EXPIRY_DAYS = 30;
     
-    // Проверка на запуск в Telegram WebApp
+    // Флаг для отслеживания состояния авторизации
+    let isAuthInitialized = false;
+    
+    // Проверяем, запущено ли приложение в Telegram WebApp
     function isTelegramWebApp() {
-        return window.Telegram && window.Telegram.WebApp;
+        // Используем глобальную функцию из telegram-lifecycle.js если она доступна
+        if (window.TelegramLifecycle && typeof window.TelegramLifecycle.isTelegramWebApp === 'function') {
+            return window.TelegramLifecycle.isTelegramWebApp();
+        }
+        
+        // Резервный метод определения Telegram WebApp
+        try {
+            // Проверка на наличие Telegram WebApp API
+            if (window.Telegram && window.Telegram.WebApp) {
+                return true;
+            }
+            
+            // Проверка на наличие специфичных параметров в URL
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('tgWebAppData') || urlParams.has('tgWebAppStartParam')) {
+                return true;
+            }
+            
+            // Проверка User-Agent на наличие упоминания Telegram
+            const userAgent = navigator.userAgent.toLowerCase();
+            if (userAgent.includes('telegram') || userAgent.includes('tgweb')) {
+                return true;
+            }
+            
+            // Дополнительная проверка на наличие куки или localStorage с признаком Telegram
+            if (safeGetItem('is_telegram_webapp') === 'true' || getCookie('is_telegram_webapp') === 'true') {
+                return true;
+            }
+            
+            return false;
+        } catch (e) {
+            // В случае ошибки возвращаем false
+            console.warn('Ошибка при проверке Telegram WebApp:', e);
+            return false;
+        }
     }
     
     // Безопасная работа с localStorage
@@ -58,26 +99,59 @@
     
     // Проверяем, авторизован ли пользователь
     function checkAuth() {
-        // Если это Telegram WebApp, пропускаем авторизацию для избежания ошибок
-        if (isTelegramWebApp()) {
-            return; // Не показываем авторизацию в Telegram
+        // Предотвращаем повторную инициализацию
+        if (isAuthInitialized) {
+            return;
+        }
+        
+        isAuthInitialized = true;
+        
+        // Проверяем, запущено ли приложение в Telegram WebApp
+        const isTelegram = isTelegramWebApp();
+        
+        // Если это Telegram WebApp, сохраняем эту информацию в localStorage и cookie
+        if (isTelegram) {
+            // Устанавливаем флаг авторизации для Telegram WebApp
+            safeSetItem(AUTH_STORAGE_KEY, 'granted');
+            setCookie(AUTH_COOKIE_NAME, 'granted', AUTH_EXPIRY_DAYS);
+            
+            // Сохраняем флаг, что это Telegram WebApp
+            safeSetItem('is_telegram_webapp', 'true');
+            setCookie('is_telegram_webapp', 'true', AUTH_EXPIRY_DAYS);
+            
+            // Добавляем класс к телу документа для стилизации
+            document.body.classList.add('telegram-webapp');
+            
+            // Не показываем авторизацию в Telegram
+            console.log('Телеграм веб-приложение обнаружено, авторизация пропущена');
+            return;
         }
         
         // Проверяем авторизацию в localStorage или cookie
-        const isAuthorized = safeGetItem('auth_access') === 'granted' || getCookie('auth_access') === 'granted';
+        const isAuthorized = safeGetItem(AUTH_STORAGE_KEY) === 'granted' || getCookie(AUTH_COOKIE_NAME) === 'granted';
         
         if (!isAuthorized) {
-            // Если пользователь не авторизован, показываем окно авторизации
-            showAuthModal();
+            console.log('Пользователь не авторизован, показываем окно авторизации');
+            // Добавляем небольшую задержку для предотвращения проблем с отображением
+            setTimeout(function() {
+                showAuthModal();
+            }, 100);
+        } else {
+            console.log('Пользователь уже авторизован');
         }
     }
     
     // Показываем модальное окно авторизации
     function showAuthModal() {
+        // Проверяем, не отображается ли уже модальное окно
+        if (document.getElementById('auth-overlay')) {
+            return;
+        }
+        
         // Создаем элементы модального окна
         const authOverlay = document.createElement('div');
-        authOverlay.className = 'auth-overlay';
         authOverlay.id = 'auth-overlay';
+        authOverlay.className = 'auth-overlay';
         
         const authContainer = document.createElement('div');
         authContainer.className = 'auth-container';
@@ -85,17 +159,17 @@
         // Содержимое модального окна
         authContainer.innerHTML = `
             <div class="auth-header">
-                <h2 class="auth-title">Доступ к Lucky Jet Predictor</h2>
+                <h2>Авторизация</h2>
             </div>
             <div class="auth-content">
-                <p>Введите пароль для доступа к сайту:</p>
-                <div class="password-input-container">
-                    <input type="password" id="auth-password" class="auth-password" placeholder="Введите пароль..." />
+                <p>Для доступа к сайту введите пароль:</p>
+                <div class="auth-input-group">
+                    <input type="password" id="auth-password" class="auth-input" placeholder="Введите пароль" autocomplete="off">
                     <button id="toggle-password" class="toggle-password">
                         <i class="fas fa-eye"></i>
                     </button>
                 </div>
-                <div class="auth-error" id="auth-error"></div>
+                <p id="auth-error" class="auth-error"></p>
                 <button id="auth-submit" class="auth-submit">Войти</button>
             </div>
         `;
@@ -113,8 +187,14 @@
         const togglePassword = document.getElementById('toggle-password');
         const errorElement = document.getElementById('auth-error');
         
-        // Фокус на поле ввода пароля
-        passwordInput.focus();
+        // Безопасно устанавливаем фокус на поле ввода пароля
+        try {
+            setTimeout(() => {
+                if (passwordInput) passwordInput.focus();
+            }, 300);
+        } catch (e) {
+            console.warn('Не удалось установить фокус на поле пароля:', e);
+        }
         
         // Обработчик нажатия на кнопку "Войти"
         submitButton.addEventListener('click', validatePassword);
@@ -136,20 +216,38 @@
             icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
         });
         
+        // Добавляем обработчик события видимости страницы
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        
+        // Функция обработки изменения видимости страницы
+        function handleVisibilityChange() {
+            if (document.visibilityState === 'visible') {
+                // Страница снова видима, проверяем авторизацию
+                const isAuthorized = safeGetItem(AUTH_STORAGE_KEY) === 'granted' || getCookie(AUTH_COOKIE_NAME) === 'granted';
+                if (isAuthorized) {
+                    closeAuthModal();
+                }
+            }
+        }
+        
         // Функция проверки пароля
         function validatePassword() {
             const password = passwordInput.value.trim();
             
-            if (password === ACCESS_PASSWORD) {
+            if (password === CORRECT_PASSWORD) {
                 // Если пароль верный, сохраняем в localStorage и cookie, затем закрываем модальное окно
-                safeSetItem('auth_access', 'granted');
-                setCookie('auth_access', 'granted', 7); // Храним 7 дней
+                safeSetItem(AUTH_STORAGE_KEY, 'granted');
+                setCookie(AUTH_COOKIE_NAME, 'granted', AUTH_EXPIRY_DAYS);
                 closeAuthModal();
             } else {
                 // Если пароль неверный, показываем сообщение об ошибке
                 errorElement.textContent = 'Неверный пароль. Попробуйте снова.';
                 passwordInput.value = '';
-                passwordInput.focus();
+                
+                // Безопасно устанавливаем фокус
+                try {
+                    passwordInput.focus();
+                } catch (e) {}
                 
                 // Добавляем анимацию встряски для поля ввода
                 passwordInput.classList.add('shake');
@@ -164,19 +262,64 @@
     function closeAuthModal() {
         const authOverlay = document.getElementById('auth-overlay');
         if (authOverlay) {
+            // Удаляем обработчик события видимости страницы
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            
             // Плавно скрываем модальное окно
             authOverlay.classList.add('fade-out');
             
             // Удаляем модальное окно после завершения анимации
             setTimeout(() => {
-                document.body.removeChild(authOverlay);
-                document.body.style.overflow = ''; // Восстанавливаем прокрутку страницы
+                try {
+                    if (authOverlay.parentNode) {
+                        authOverlay.parentNode.removeChild(authOverlay);
+                    }
+                    document.body.style.overflow = ''; // Восстанавливаем прокрутку страницы
+                } catch (e) {
+                    console.warn('Ошибка при удалении модального окна:', e);
+                }
             }, 300);
+        }
+    }
+    
+    // Глобальная функция для обработки изменения видимости страницы
+    function handleVisibilityChange() {
+        if (document.visibilityState === 'visible') {
+            // Страница снова видима, проверяем авторизацию
+            const isAuthorized = safeGetItem(AUTH_STORAGE_KEY) === 'granted' || getCookie(AUTH_COOKIE_NAME) === 'granted';
+            if (isAuthorized) {
+                closeAuthModal();
+            }
         }
     }
     
     // Инициализация при загрузке страницы
     function init() {
+        // Добавляем обработчики событий жизненного цикла страницы
+        window.addEventListener('pageshow', function(event) {
+            // Если страница была восстановлена из кэша (bfcache)
+            if (event.persisted) {
+                isAuthInitialized = false; // Сбрасываем флаг, чтобы повторно проверить авторизацию
+                setTimeout(checkAuth, 300); // Проверяем авторизацию с небольшой задержкой
+            }
+        });
+        
+        // Добавляем глобальный обработчик события видимости
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') {
+                // Проверяем, есть ли авторизация после возврата на страницу
+                const isAuthorized = safeGetItem(AUTH_STORAGE_KEY) === 'granted' || getCookie(AUTH_COOKIE_NAME) === 'granted';
+                
+                // Если нет авторизации и не Telegram WebApp, показываем модальное окно
+                if (!isAuthorized && !isTelegramWebApp()) {
+                    // Сбрасываем флаг инициализации
+                    isAuthInitialized = false;
+                    setTimeout(checkAuth, 300);
+                }
+            }
+        });
+        
+        // Проверяем авторизацию
         checkAuth();
     }
     
@@ -184,6 +327,7 @@
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
-        init();
+        // Добавляем небольшую задержку для предотвращения проблем с инициализацией
+        setTimeout(init, 100);
     }
 })();
